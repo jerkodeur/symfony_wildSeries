@@ -20,6 +20,8 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% block body %}{% endblock %}
+		{% block body %}
+			{% block header %}{% endblock %}
+		{% endblock %}
 	</body>
 </html>

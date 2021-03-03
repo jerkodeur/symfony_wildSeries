@@ -1,6 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
 @import "variables";
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+@import url(https://fonts.googleapis.com/css?family=Iceberg:regular);
+@import url(https://fonts.googleapis.com/css?family=Stylish:regular);
 
 *,
 ::before,
@@ -16,22 +18,87 @@ html {
 }
 
 body {
-    background-color: $secondary;
+    background-color: $primary;
 }
 
 .navbar {
     background-color: $dark !important;
     .navbar-brand {
         color: $primary !important;
+        font-family: $stylish !important;
+        font-size: 2rem;
         font-weight: bold;
     }
     a {
         color: $light;
+        font-size: 1.25em;
+        font-family: $iceberg;
+        margin-top: 0.25em;
         &:hover {
             color: $hoverLight !important;
         }
         &:active {
             color: $danger !important;
+            font-weight: bold;
         }
     }
+}
+
+.programs,
+.categories_show,
+.categories_index {
+    color: $dark;
+    width: 75%;
+    margin: 1.5em auto;
+    h1 {
+        color: $secondary;
+        font-family: $iceberg;
+    }
+    h2 {
+        font-family: $stylish;
+        a {
+            color: $dark;
+            &:hover {
+                text-decoration: none;
+                color: #000;
+            }
+        }
+    }
+    li {
+        margin-left: 1em;
+    }
+}
+
+.program_show {
+    .media {
+        height: 100%;
+        h1 {
+            margin-top: 0.5em;
+            color: $dark;
+            font-family: $stylish;
+        }
+        img {
+            height: 750px;
+        }
+    }
+    a {
+        margin-left: 0.25em;
+    }
+}
+
+a {
+    &.brown {
+        color: $secondary;
+        &:hover {
+            color: $black;
+        }
+    }
+}
+
+.danger {
+    color: $danger;
+}
+
+.header {
+    margin-bottom: 2em;
 }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All program categories
+{% endblock %}
+
+{% block body %}
+	<div class="categories_index">
+		{% block header %}
+			<h1>Choose a program category:</h1>
+			<hr/>
+		{% endblock %}
+		{% for category in categories %}
+			<h2>
+				<li>
+					<a href="{{path('category_show', {categoryName: category.name})}}">
+						{{ category.name }}
+					</a>
+				</li>
+			</h2>
+		{% endfor %}
+	</div>
+{% endblock %}
