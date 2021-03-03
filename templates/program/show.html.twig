@@ -13,10 +13,23 @@
 				<p>Catégorie :
 					<span class='danger'>{{ program.category.name }}</span>
 				</p>
+				<p>
+					<ul>
+						{% for season in seasons %}
+							<a class="brown" href="{{path('programs_showSeason', {programId: program.id, seasonId: season.id})}}">
+								<li>Saison
+									{{season.number}}
+									-
+									{{season.year}}
+								</li>
+							</a>
+						{% endfor %}
+					</ul>
+				</p>
 			</div>
 		</div>
 
-		<a class="brown" href="{{ path('program_index') }}">
+		<a class="brown" href="{{ path('programs_index') }}">
 			Retour à la liste des programmes
 		</a>
 	</div>

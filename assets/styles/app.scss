@@ -46,7 +46,8 @@ body {
 
 .programs,
 .categories_show,
-.categories_index {
+.categories_index,
+.season_show {
     color: $dark;
     width: 75%;
     margin: 1.5em auto;
@@ -101,4 +102,18 @@ a {
 
 .header {
     margin-bottom: 2em;
+}
+
+.season_list {
+    border: 1pt solid $secondary;
+    padding: 0.25em;
+    background-color: $light;
+
+    li {
+        list-style-type: none;
+    }
+    p {
+        font-weight: bold;
+        padding-top: 0.5em;
+    }
 }

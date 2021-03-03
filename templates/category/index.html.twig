@@ -12,7 +12,7 @@
 		{% for category in categories %}
 			<h2>
 				<li>
-					<a href="{{path('category_show', {categoryName: category.name})}}">
+					<a href="{{path('categories_show', {categoryName: category.name})}}">
 						{{ category.name }}
 					</a>
 				</li>

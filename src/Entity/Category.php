@@ -31,7 +31,7 @@ class Category
     /**
      * One category have many programs
      * @var Collection
-     * @ORM\OneToMany(targetEntity="\app\Entity\Program", mappedBy="Category")
+     * @ORM\OneToMany(targetEntity=Program::class, mappedBy="category")
      */
     private $programs;
 
