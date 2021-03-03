@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,18 @@ class Category
      */
     private $name;
 
+    /**
+     * One category have many programs
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="\app\Entity\Program", mappedBy="Category")
+     */
+    private $programs;
+
+    public function __construct()
+    {
+        $this->programs = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +53,52 @@ class Category
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection|Program[]
+     */
+    public function getPrograms(): Collection
+    {
+        return $this->programs;
+    }
+
+    /**
+     * Add a program to the category collection
+     *
+     * @param Program $program
+     *
+     * @return self
+     */
+    public function addProgram(Program $program): self
+    {
+        if (!$this->programs->contains($program)) {
+            $this->programs[] = $program;
+            $program->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a program from the category collection
+     *
+     * @param Program $program
+     *
+     * @return self
+     */
+    public function removeProgram(Program $program): self
+    {
+        if ($this->programs->contains($program)) {
+            $this->programs->removeElement($program);
+            if ($program->getCategory() === $this) {
+                $program->setCategory(null);
+            }
+        }
 
         return $this;
     }
