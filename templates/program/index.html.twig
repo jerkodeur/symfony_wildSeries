@@ -4,31 +4,30 @@
 {% endblock %}
 
 {% block body %}
-	<div class="programs">
+	<div class="programs main">
 		{% block header %}
-			<h1>Toutes les séries de la table program :</h1>
-			<hr/>
+			<div class="header">
+				<h1>Liste des séries disponibles:</h1>
+				<hr/>
+			</div>
 		{% endblock %}
 		{#TODO Twig: boucler avec for #}
 		{% for program in programs %}
 			<div>
 				{#TODO Twig: afficher l'index de la boucle #}
-				<a href="{{path('programs_show', {id: program.id})}}">
+				<a href="{{path('programs_show', {program: program.id})}}">
 					<h2>
 						{{ loop.index }}
 						/
 						{{ program.title }}
 						- Catégorie :
-						{{ program.category.name }}</a>
-				</h2>
-				<p>{{ program.summary }}</p>
+						{{ program.category.name }}
+					</h2>
+				</a>
+				<p class="pl-4">{{ program.summary }}</p>
 			</div>
 		{% else %}
 			Aucune série trouvée.
 		{% endfor %}
-		{# TODO Lien vers le nom d'une route #}
-	{# <a href="{{ path('homepage') }}"> #}
-		{# Retour à l'accueil #}
-		{# </a>  #}
 	</div>
 {% endblock %}

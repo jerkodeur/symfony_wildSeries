@@ -4,34 +4,41 @@
 {% endblock %}
 
 {% block body %}
-	<div class="program_show">
+	<div class="program_show main">
 		<div class="media">
 			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
 			<div class="media-body">
+				<hr/>
 				<h1>{{ program.title }}</h1>
+				<hr/>
 				<p>{{ program.summary }}</p>
-				<p>Catégorie :
-					<span class='danger'>{{ program.category.name }}</span>
+				<hr/>
+				<p class="text-black">Catégorie :
+					<span class='danger-text ml-2 text-uppercase'>{{ program.category.name }}</span>
 				</p>
+				<hr/>
 				<p>
 					<ul>
 						{% for season in seasons %}
-							<a class="brown" href="{{path('programs_showSeason', {programId: program.id, seasonId: season.id})}}">
-								<li>Saison
+							<li>
+								{# TODO Lien vers le nom d'une route #}
+								<a class="brown" href="{{path('programs_show_season', {program: program.id, season: season.id})}}">
+									Saison
 									{{season.number}}
 									-
 									{{season.year}}
-								</li>
-							</a>
+								</a>
+							</li>
 						{% endfor %}
 					</ul>
 				</p>
+				<hr/>
+				<a class="black" href="{{ path('programs_index') }}">
+					Retour à la liste des programmes
+				</a>
 			</div>
 		</div>
 
-		<a class="brown" href="{{ path('programs_index') }}">
-			Retour à la liste des programmes
-		</a>
 	</div>
 
 {% endblock %}

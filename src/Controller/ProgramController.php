@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 //TODO Prefix a route for the entire class
 /**
@@ -33,7 +35,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}", methods={"GET"}, name="show")
+     * @Route("/{program<\d+>}", methods={"GET"}, name="show")
      */
     //TODO find by entity object
     public function show(Program $program): Response
@@ -54,28 +56,15 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * Undocumented function
+     * Return the needed program season vue
      *
-     * @Route("/{programId<\d+>}/seasons/{seasonId<\d+>}", methods={"GET"}, name="showSeason")
-     *
-     * @param int $programId
-     * @param int $SeasonId
+     * @Route("/{program<\d+>}/seasons/{season<\d+>}", methods={"GET"}, name="show_season")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showSeason(int $programId, int $seasonId): Response
+    public function seasonShow(Program $program, Season $season): Response
     {
         $doctrine = $this->getDoctrine();
-
-        $program = $doctrine
-            ->getRepository(Program::class)
-            ->find($programId);
-
-        $season = $doctrine
-            ->getRepository(Season::class)
-            ->find($seasonId);
-
-        // dd($season);
 
         $episodes = $doctrine
             ->getRepository(Episode::class)
@@ -87,6 +76,26 @@ class ProgramController extends AbstractController
             'program' => $program,
             'season' => $season,
             'episodes' => $episodes
+        ]);
+    }
+
+    /**
+     * Return the program season episode vue
+     *
+     * @Route("/{program<\d+>}/seasons/{season<\d+>}/episodes/{episode<\d+>}", methods={"GET"}, name="episode_show")
+     *
+     * @param \App\Entity\Program $program
+     * @param \App\Entity\Season $season
+     * @param \App\Entity\Episode $episode
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function episodeShow(Program $program, Season $season, Episode $episode): Response
+    {
+        return $this->render('episode/show.html.twig', [
+            'program' => $program,
+            'season' => $season,
+            'episode' => $episode
         ]);
     }
 }

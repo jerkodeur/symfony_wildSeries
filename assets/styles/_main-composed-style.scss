@@ -1,0 +1,14 @@
+.link-black {
+    text-decoration: none;
+    color: $black;
+    &:hover {
+        color: $danger;
+    }
+}
+
+.danger-text {
+    color: $danger;
+    @extend .font-secondary;
+    font-weight: bold;
+    font-size: 1.1em;
+}

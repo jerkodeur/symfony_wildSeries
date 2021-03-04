@@ -1,0 +1,40 @@
+*,
+::before,
+::after {
+    padding: O;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    @extend .font-main;
+    font-size: 16px;
+}
+
+body {
+    background-color: $primary;
+}
+
+a {
+    &:hover {
+        text-decoration: none;
+    }
+    &.brown {
+        color: $secondary;
+        &:hover {
+            color: $black;
+        }
+    }
+    &.black {
+        color: $black;
+        &:hover {
+            color: $danger;
+        }
+    }
+    &.dark {
+        color: $dark;
+        &:hover {
+            color: $black;
+        }
+    }
+}

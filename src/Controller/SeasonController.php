@@ -24,7 +24,7 @@ class SeasonController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    // public function showSeason(int $program, int $season): Response
+    // public function show_season(int $program, int $season): Response
     // {
     // }
 }

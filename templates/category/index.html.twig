@@ -4,15 +4,15 @@
 {% endblock %}
 
 {% block body %}
-	<div class="categories_index">
+	<div class="categories_index main">
 		{% block header %}
-			<h1>Choose a program category:</h1>
+			<h1>Choississez une catégorie:</h1>
 			<hr/>
 		{% endblock %}
 		{% for category in categories %}
 			<h2>
-				<li>
-					<a href="{{path('categories_show', {categoryName: category.name})}}">
+				<li class="ml-4">
+					<a href="{{path('categories_show', {categoryName: category.name})}}" class="dark">
 						{{ category.name }}
 					</a>
 				</li>

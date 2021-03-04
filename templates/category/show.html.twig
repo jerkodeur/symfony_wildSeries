@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="categories_show">
+	<div class="categories_show main">
 		{% block header %}
 			<div class='header'>
 				<h1>
-					Programs for
+					Séries trouvées pour la catégorie
 					{{category.name}}
-					name
 				</h1>
 				<hr/>
 			</div>
@@ -15,13 +14,12 @@
 
 		<div>
 			{% for program in programs %}
-				<h2>{{program.id}}
-					/
-					<a href="{{path('programs_show', {id: program.id})}}">
+				<a href="{{path('programs_show', {program: program.id})}}">
+					<h2>
 						{{program.title}}
-					</a>
-				</h2>
-				<p>{{program.summary}}
+					</h2>
+				</a>
+				<p class="ml-4">{{program.summary}}
 				</p>
 			{% else %}
 				Aucune série trouvée.
