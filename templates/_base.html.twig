@@ -3,9 +3,6 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<link rel="icon" type="image/png" href="{{ asset('build/logo.png') }}"/>
-		<header>
-			{% include '_navbar.html.twig' %}
-		</header>
 		<title>
 			{% block title %}
 				Welcome!
@@ -20,6 +17,9 @@
 		{% endblock %}
 	</head>
 	<body>
+		<header>
+			{% block navbar %}{% endblock %}
+		</header>
 		{% block body %}
 			{% block header %}{% endblock %}
 		{% endblock %}
