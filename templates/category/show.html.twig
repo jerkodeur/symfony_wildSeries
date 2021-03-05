@@ -1,7 +1,7 @@
-{% extends 'base.html.twig' %}
+{% extends '_fullbase.html.twig' %}
 
 {% block body %}
-	<div class="categories_show main">
+	<div class="category_show main">
 		{% block header %}
 			<div class='header'>
 				<h1>
@@ -14,7 +14,7 @@
 
 		<div>
 			{% for program in programs %}
-				<a href="{{path('programs_show', {program: program.id})}}">
+				<a href="{{path('program_show', {program: program.id})}}">
 					<h2>
 						{{program.title}}
 					</h2>

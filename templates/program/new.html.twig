@@ -1,0 +1,43 @@
+{# templates/category/new.html.twig #}
+
+{% extends "fullbase.html.twig" %}
+{% block body %}
+<div class="main">
+	{% block header %}
+		<div class='header'>
+			<h1>
+				Ajout d'une nouvelle série
+			</h1>
+			<hr/>
+		</div>
+	{% endblock %}
+	{{ form_start(form) }}
+	{{ form_label(form.title, 'Titre *') }}
+	<div class="input-group mb-3">
+		{{ form_widget(form.title, {'attr': {'class' : 'form-control'}}) }}
+	</div>
+	{{ form_errors(form.title)}}
+	{{ form_help(form.title) }}
+	{{ form_label(form.summary, 'Description *') }}
+	<div class="input-group mb-3">
+		{{ form_widget(form.summary, {'attr': {'class' : 'form-control'}}) }}
+	</div>
+	{{ form_errors(form.summary)}}
+	{{ form_help(form.summary) }}
+	{{ form_label(form.poster, 'Url de l\'image') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.poster, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		{{ form_errors(form.poster)}}
+		{{ form_help(form.poster) }}
+		{{ form_label(form.category, 'Catégorie') }}
+<div class="input-group mb-4">
+{{ form_widget(form.category, {'attr': {'class' : 'form-control text-capitalize'}}) }}
+		</div>
+		{{ form_errors(form.category)}}
+		{{ form_help(form.category) }}
+
+		<button type="submit" class="btn btn-dark mb-2">Créer la nouvelle série</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

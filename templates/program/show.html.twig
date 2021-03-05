@@ -1,5 +1,5 @@
 {# templates/program/show.html.twig #}
-{% extends 'base.html.twig' %}
+{% extends '_fullbase.html.twig' %}
 {% block title %}Série #{{ program.id }}
 {% endblock %}
 
@@ -9,7 +9,7 @@
 			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
 			<div class="media-body">
 				<hr/>
-				<h1>{{ program.title }}</h1>
+				<h1>{{ program.title|upper }}</h1>
 				<hr/>
 				<p>{{ program.summary }}</p>
 				<hr/>
@@ -22,7 +22,7 @@
 						{% for season in seasons %}
 							<li>
 								{# TODO Lien vers le nom d'une route #}
-								<a class="brown" href="{{path('programs_show_season', {program: program.id, season: season.id})}}">
+								<a class="brown" href="{{path('program_show_season', {program: program.id, season: season.id})}}">
 									Saison
 									{{season.number}}
 									-
@@ -33,7 +33,7 @@
 					</ul>
 				</p>
 				<hr/>
-				<a class="black" href="{{ path('programs_index') }}">
+				<a class="black" href="{{ path('program_index') }}">
 					Retour à la liste des programmes
 				</a>
 			</div>

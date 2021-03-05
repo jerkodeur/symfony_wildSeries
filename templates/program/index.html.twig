@@ -1,8 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends '_fullbase.html.twig' %}
 
 {% block title %}All programs
 {% endblock %}
-
+{% block nav_r_items %}
+	<a href="{{path('program_new')}}">
+		<button type="button" class="btn btn-hoverLight">
+			Nouvelle série</button>
+	</a>
+{% endblock %}
 {% block body %}
 	<div class="programs main">
 		{% block header %}
@@ -15,7 +20,7 @@
 		{% for program in programs %}
 			<div>
 				{#TODO Twig: afficher l'index de la boucle #}
-				<a href="{{path('programs_show', {program: program.id})}}">
+				<a href="{{path('program_show', {program: program.id})}}">
 					<h2>
 						{{ loop.index }}
 						/

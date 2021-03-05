@@ -74,4 +74,34 @@
             height: 500px;
         }
     }
+    form {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        border: 1pt solid $secondary;
+        background-color: $light;
+        border-radius: 5px;
+        padding: 0.5em;
+        .form_errors {
+            color: $danger;
+        }
+        .input-group {
+            textarea {
+                min-height: 10em;
+            }
+            width: 75%;
+        }
+        .form-control {
+            border-color: $primary;
+            @extend .font-main;
+            color: $dark;
+        }
+        label {
+            @extend .font-secondary;
+            font-size: 1.25em;
+        }
+    }
 }

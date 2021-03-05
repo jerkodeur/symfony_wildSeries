@@ -12,3 +12,29 @@
     font-weight: bold;
     font-size: 1.1em;
 }
+
+// buttons
+.btn-dark {
+    background-color: $dark;
+    color: $light;
+    border-color: $light;
+    font-weight: bold;
+    &:hover {
+        background-color: $primary;
+        color: $dark;
+        border-color: $secondary;
+    }
+}
+
+.btn-hoverLight {
+    @extend .btn-danger;
+    background-color: $secondary;
+    color: $hoverLight;
+    border-color: $primary;
+    font-weight: bold;
+    &:hover {
+        background-color: $hoverLight;
+        color: $dark;
+        border-color: $primary;
+    }
+}

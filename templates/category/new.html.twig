@@ -1,0 +1,26 @@
+{# templates/category/new.html.twig #}
+
+{% extends "fullbase.html.twig" %}
+{% block body %}
+	<div class="main">
+		{% block header %}
+			<div class='header'>
+				<h1>
+					Ajout d'une nouvelle catégorie
+				</h1>
+				<hr/>
+			</div>
+		{% endblock %}
+		{{ form_start(form) }}
+		{{ form_label(form.name, 'Nom de la categorie') }}
+		<div
+			class="input-group mb-3">
+			{# <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"> #}
+			{{ form_widget(form.name, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		{{ form_errors(form.name)}}
+		{{ form_help(form.name) }}
+		<button type="submit" class="btn btn-dark mb-2">Créer la catégorie</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
