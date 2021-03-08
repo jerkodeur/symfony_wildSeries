@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SeasonRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,12 +27,17 @@ class Season
     private $program;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", unique=true)
+     * @Assert\EnableAutoMapping()
+     * @Assert\Positive
      */
     private $number;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Regex(pattern="/^[1|2]{1}\d{3}$/",match=true,message="* Format de date invalide")
+     * @Assert\GreaterThan(value = 1900, message = "* Veuillez insérer une date supérieure à {{ compared_value }}")
+     * @Assert\LessThanOrEqual(value= 2021, message = "* Date antérieure à la date actuelle")
      */
     private $year;
 

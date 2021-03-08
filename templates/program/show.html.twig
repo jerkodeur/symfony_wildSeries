@@ -3,6 +3,13 @@
 {% block title %}Série #{{ program.id }}
 {% endblock %}
 
+{% block nav_r_items %}
+	<a href="{{path('program_season_new', {program: program.id})}}">
+		<button type="button" class="btn btn-hoverLight">
+			Nouvelle saison</button>
+	</a>
+{% endblock %}
+
 {% block body %}
 	<div class="program_show main">
 		<div class="media">
@@ -25,7 +32,9 @@
 								<a class="brown" href="{{path('program_show_season', {program: program.id, season: season.id})}}">
 									Saison
 									{{season.number}}
-									-
+									{% if season.year %}
+										-
+									{% endif %}
 									{{season.year}}
 								</a>
 							</li>

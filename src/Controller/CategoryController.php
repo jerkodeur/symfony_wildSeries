@@ -5,18 +5,19 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Program;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/categories", name="category_")
+ * @Route(name="category_")
  */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", methods={"GET"}, name="index")
+     * @Route("/categories", methods={"GET"}, name="index")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -35,7 +36,7 @@ class CategoryController extends AbstractController
     /**
      * Create a new category program
      *
-     * @Route("/new", methods={"GET","POST"}, name="new")
+     * @Route("category/new", methods={"GET","POST"}, name="new")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -48,7 +49,7 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Deal with the submitted data
             // Get the Entity Manager
             $entityManager = $this->getDoctrine()->getManager();
@@ -66,7 +67,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{categoryName}", methods={"GET"}, name="show")
+     * @Route("category/{categoryName}", methods={"GET"}, name="show")
      *
      * @param string $categoryName
      * @return \Symfony\Component\HttpFoundation\Response

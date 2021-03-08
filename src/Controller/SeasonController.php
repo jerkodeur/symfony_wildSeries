@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\SeasonType;
 use App\Repository\SeasonRepository;
@@ -21,25 +22,10 @@ class SeasonController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    #[Route('/{program<\d+>}/new', name: 'new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Program $program): Response
     {
-        $season = new Season();
-        $form = $this->createForm(SeasonType::class, $season);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($season);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('season_index');
-        }
-
-        return $this->render('season/new.html.twig', [
-            'season' => $season,
-            'form' => $form->createView(),
-        ]);
+        //
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]

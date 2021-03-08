@@ -39,6 +39,18 @@
         font-family: $stylish;
         color: $black;
     }
+    .message_error {
+        width: 75%;
+        margin: -1em 0 0.75em 0.5em;
+        ul {
+            margin: 0;
+            padding-left: 0;
+            padding: 0.25em;
+            li {
+                list-style-type: none;
+            }
+        }
+    }
     .header {
         margin-bottom: 2em;
         h1 {

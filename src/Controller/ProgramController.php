@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\ProgramType;
+use App\Form\SeasonType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,7 +71,7 @@ class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($program);
             $entityManager->flush();
@@ -124,6 +125,34 @@ class ProgramController extends AbstractController
             'program' => $program,
             'season' => $season,
             'episode' => $episode
+        ]);
+    }
+    /**
+     * Create a new season for the program
+     *
+     * @Route("/{program<\d+>}/new", methods={"GET","POST"}, name="season_new")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Entity\Program $program
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function seasonNew(Request $request, Program $program): Response
+    {
+        $season = new Season();
+        $form = $this->createForm(SeasonType::class, $season);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($season);
+            $entityManager->flush();
+            return $this->redirectToRoute('program_show', ['program' => $program->getId()]);
+        }
+
+        return $this->render('season/new.html.twig', [
+            'program' => $program,
+            'form' => $form->createView()
         ]);
     }
 }

@@ -38,3 +38,9 @@
         border-color: $primary;
     }
 }
+
+.message_error {
+    @extend .font-primary;
+    color: red;
+    font-size: 0.9em;
+}

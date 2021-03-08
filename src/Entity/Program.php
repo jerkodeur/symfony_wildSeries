@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ProgramRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProgramRepository::class)
+ * @UniqueEntity(fields = {"title"}, message = "Ce titre est déjà existant")
  */
 class Program
 {
@@ -21,11 +24,18 @@ class Program
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message= "* Le titre doit être renseigné")
+     * @Assert\Length(
+     *  min=1,
+     *  max=100,
+     *  minMessage="* Le titre doit contenir au moins un caractère",
+     *  maxMessage="* Le titre ne peut contenir plus de 100 caractères")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message = "Le résumé de la série doit être renseigné")
      */
     private $summary;
 
