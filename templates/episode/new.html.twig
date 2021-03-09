@@ -1,11 +1,47 @@
-<!DOCTYPE html>
-
-<title>New Episode</title>
+{% extends "_fullbase.html.twig" %}
 
 {% block body %}
-    <h1>Create new Episode</h1>
+	<div class="main">
+		{% block header %}
+			<div class='header'>
+				<h1>
+					{{ program.title }}
+					/ Saison
+					{{ season.number }}
+				</h1>
+				<h2>
+					Ajout d'un nouvel épisode
+				</h2>
+				<hr/>
+			</div>
+		{% endblock %}
+		{{ form_start(form) }}
 
-    {{ include('episode/_form.html.twig') }}
+		{# Title of the episode #}
+		{{ form_label(form.title, '* Titre de l\'épisode *') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.title, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<span class="message_error">{{ form_errors(form.title)}}</span>
+		{{ form_help(form.title) }}
 
-    <a href="{{ path('episode_index') }}">back to list</a>
+		{# Number of the episode #}
+		{{ form_label(form.number, '* Numéro de l\'épisode *') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.number, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<span class="message_error">{{ form_errors(form.number)}}</span>
+		{{ form_help(form.number) }}
+
+		{# Description #}
+		{{ form_label(form.synopsis, 'Description') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.synopsis, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<span class="message_error">{{ form_errors(form.synopsis)}}</span>
+		{{ form_help(form.synopsis) }}
+
+		<button type="submit" class="btn btn-dark mb-2">Créer le nouvel épisode</button>
+		{{ form_end(form) }}
+	</div>
 {% endblock %}

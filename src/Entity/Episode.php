@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EpisodeRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +26,8 @@ class Episode
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "* Le titre de l'épisode doit être renseigné")
+     * @Assert\Length(max=255, maxMessage="Le titre ne peut excéder 255 caractères")
      */
     private $title;
 

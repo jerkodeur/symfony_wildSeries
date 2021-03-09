@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Actor;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\EpisodeType;
 use App\Form\ProgramType;
 use App\Form\SeasonType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -101,7 +103,7 @@ class ProgramController extends AbstractController
                 'season' => $season
             ]);
 
-        return $this->render('season/index.html.twig', [
+        return $this->render('season/show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episodes' => $episodes
@@ -142,8 +144,8 @@ class ProgramController extends AbstractController
         $season = new Season();
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $season->setProgram($program);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($season);
             $entityManager->flush();
@@ -153,6 +155,58 @@ class ProgramController extends AbstractController
         return $this->render('season/new.html.twig', [
             'program' => $program,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Create a new episode
+     *
+     * @Route("/{program<\d+>}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Entity\Program $program
+     * @param \App\Entity\Season $season
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function EpisodeNew(Request $request, Program $program, Season $season): Response
+    {
+        $episode = new Episode;
+        $form = $this->createForm(EpisodeType::class, $episode);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $episode->setSeason($season);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($episode);
+            $entityManager->flush();
+            return $this->redirectToRoute('program_episode_new', [
+                'program' => $program->getId(),
+                'season' => $season->getId()
+            ]);
+        }
+        return $this->render('episode/new.html.twig', [
+            'program' => $program,
+            'season' => $season,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Show the current actor informations
+     *
+     * @Route("/{program<\d+>}/actor/{actor<\d+>}", name="actor_show")
+     *
+     * @param \App\Entity\Program $program
+     * @param \App\Entity\Actor $actor
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function ActorShow(Program $program, Actor $actor): Response
+    {
+        return $this->render('actor/show.html.twig', [
+            'program' => $program,
+            'actor' => $actor,
+            // 'programs' => $actor->getPrograms()
         ]);
     }
 }

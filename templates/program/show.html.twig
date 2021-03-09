@@ -42,6 +42,17 @@
 					</ul>
 				</p>
 				<hr/>
+				<strong class="text-black">Acteurs :</strong>
+				<ul>
+					{% for actor in program.actors %}
+						<li>
+							<a class="dark" href="{{path('program_actor_show', {program: program.id, actor: actor.id})}}">{{ actor.name }}</a>
+						</li>
+					{% else %}
+						<li>Aucun acteur pour cette série</li>
+					{% endfor %}
+				</ul>
+				<hr/>
 				<a class="black" href="{{ path('program_index') }}">
 					Retour à la liste des programmes
 				</a>

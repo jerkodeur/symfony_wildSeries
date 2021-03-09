@@ -3,46 +3,36 @@
 {% block title %}Hello SeasonController!
 {% endblock %}
 
-{% block nav_r_items %}
-	<a href="{{path('program_season_new', {program: program.id})}}">
-		<button type="button" class="btn btn-hoverLight">
-			Nouvelle saison</button>
-	</a>
-{% endblock %}
-
 {% block body %}
-	<div class="season_show main">
-		{% block header %}
-			<h1>Saison
-				{{season.number}}
-				de
-				{{program.title}}
-				({{season.year}})</h1>
-			<hr/>
-			<p class="text-black">{{season.description}}</p>
-		{% endblock %}
-		<div class="media">
-			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-			<div class="d-flex flex-column w-100">
-				<div class="season_list">
-					<ul class="w-100">
-						<p class="mt-2 text-black">Liste des épisodes:</p>
-						<hr/>
-						{% for episode in episodes %}
-							<li>
-								<a class="dark" href={{path('program_episode_show', {program: program.id, season: season.id, episode: episode.id} )}}>Episode
-									{{episode.number}}
-									:
-									{{episode.title}}
-								</a>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-				<a class="black m-2" href="{{ path('program_show', {program: program.id}) }}">
-					Retour vers la liste des saisons
-				</a>
-			</div>
-		</div>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="example-wrapper">
+		<h1>Hello
+			{{ controller_name }}! ✅</h1>
+
+		This friendly message is coming from:
+		<ul>
+			<li>Your controller at
+				<code>
+					<a href="{{ '/home/jerkoder/docsCommuns/mes_devs_docs/projects/symfony/wild-series/src/Controller/SeasonController.php'|file_link(0) }}">src/Controller/SeasonController.php</a>
+				</code>
+			</li>
+			<li>Your template at
+				<code>
+					<a href="{{ '/home/jerkoder/docsCommuns/mes_devs_docs/projects/symfony/wild-series/templates/Season/index.html.twig'|file_link(0) }}">templates/Season/index.html.twig</a>
+				</code>
+			</li>
+		</ul>
 	</div>
 {% endblock %}

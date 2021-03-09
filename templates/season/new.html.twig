@@ -1,11 +1,48 @@
-<!DOCTYPE html>
-
-<title>New Season</title>
+{% extends "_fullbase.html.twig" %}
 
 {% block body %}
-	<h1>Create new Season</h1>
+	<div class="main">
+		{% block header %}
+			<div class='header'>
+				<h1>
+					{{ program.title }}
+				</h1>
+				<h2>
+					Ajout d'une nouvelle saison
+				</h2>
+				<hr/>
+			</div>
+		{% endblock %}
+		{{ form_start(form) }}
 
-	{{ include('season/_form.html.twig') }}
+		{# Number of the season #}
+		{{ form_label(form.number, 'Numéro de saison *') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.number, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<span class="message_error">{{ form_errors(form.number)}}</span>
+		{{ form_help(form.number) }}
 
-	<a href="{{ path('program_show', {program: program.id}) }}">back to list</a>
+		{# Description #}
+		{{ form_label(form.description, 'Description ') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.description, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<span class="message_error">{{ form_errors(form.description)}}</span>
+		{{ form_help(form.description) }}
+
+		{# Year #}
+		{{ form_label(form.year, 'Année de sortie') }}
+		<div class="input-group mb-3">
+			{{ form_widget(form.year, {'attr': {'class' : 'form-control'}}) }}
+		</div>
+		<span class="message_error">{{ form_errors(form.year)}}</span>
+		{{ form_help(form.year) }}
+
+		{# Hidden program field #}
+		{% do form.program.setRendered() %}
+
+		<button type="submit" class="btn btn-dark mb-2">Créer la nouvelle saison</button>
+		{{ form_end(form) }}
+	</div>
 {% endblock %}
