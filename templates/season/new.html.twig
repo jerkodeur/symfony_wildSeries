@@ -3,13 +3,11 @@
 {% block body %}
 	<div class="main">
 		{% block header %}
-			<div class='header'>
+			<div class="header">
 				<h1>
 					{{ program.title }}
 				</h1>
-				<h2>
-					Ajout d'une nouvelle saison
-				</h2>
+				<h2>Ajout d'une nouvelle saison</h2>
 				<hr/>
 			</div>
 		{% endblock %}
@@ -18,7 +16,7 @@
 		{# Number of the season #}
 		{{ form_label(form.number, 'Numéro de saison *') }}
 		<div class="input-group mb-3">
-			{{ form_widget(form.number, {'attr': {'class' : 'form-control'}}) }}
+			{{ form_widget(form.number, { 'attr': {'class' : 'form-control'}}) }}
 		</div>
 		<span class="message_error">{{ form_errors(form.number)}}</span>
 		{{ form_help(form.number) }}

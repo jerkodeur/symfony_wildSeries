@@ -2,45 +2,45 @@
 {% extends '_fullbase.html.twig' %}
 {% block title %}Série #{{ program.id }}
 {% endblock %}
-
 {% block nav_r_items %}
 	<a href="{{path('program_season_new', {program: program.id})}}">
 		<button type="button" class="btn btn-hoverLight">
-			Nouvelle saison</button>
+			Nouvelle saison
+		</button>
 	</a>
 {% endblock %}
-
 {% block body %}
 	<div class="program_show main">
 		<div class="media">
-			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
+			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster"/>
 			<div class="media-body">
 				<hr/>
 				<h1>{{ program.title|upper }}</h1>
 				<hr/>
 				<p>{{ program.summary }}</p>
 				<hr/>
-				<p class="text-black">Catégorie :
-					<span class='danger-text ml-2 text-uppercase'>{{ program.category.name }}</span>
+				<p class="text-black">
+					Catégorie :
+					<span class="danger-text ml-2 text-uppercase">{{ program.category.name }}</span>
+					{# display:block #}
 				</p>
 				<hr/>
-				<p>
-					<ul>
-						{% for season in seasons %}
-							<li>
-								{# TODO Lien vers le nom d'une route #}
-								<a class="brown" href="{{path('program_show_season', {program: program.id, season: season.id})}}">
-									Saison
-									{{season.number}}
-									{% if season.year %}
-										-
-									{% endif %}
-									{{season.year}}
-								</a>
-							</li>
-						{% endfor %}
-					</ul>
-				</p>
+				<ul>
+					{% for season in seasons %}
+						<li>
+							{# TODO Lien vers le nom d'une route #}
+							<a class="brown" href="{{path('program_show_season', {program: program.id, season: season.id})}}">
+								Saison
+								{{season.number}}
+								{% if season.year %}
+									-
+								{% endif
+                        %}
+								{{season.year}}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
 				<hr/>
 				<strong class="text-black">Acteurs :</strong>
 				<ul>
@@ -58,7 +58,6 @@
 				</a>
 			</div>
 		</div>
-
 	</div>
 
 {% endblock %}
