@@ -1,27 +1,37 @@
 {% extends '_fullbase.html.twig' %}
 
-{% block title %}All program categories
-{% endblock %}
+{% block title %}
+    All program categories
+{% endblock title %}
 {% block nav_r_items %}
-	<a href="{{path('category_new')}}">
-		<button type="button" class="btn btn-hoverLight">
-			Nouvelle catégorie</button>
-	</a>
-{% endblock %}
+    <a href="{{ path('category_new') }}">
+        <button type="button" class="btn btn-hoverLight">
+            Nouvelle catégorie
+        </button>
+    </a>
+{% endblock nav_r_items %}
 {% block body %}
-	<div class="category_index main">
-		{% block header %}
-			<h1>Choississez une catégorie:</h1>
-			<hr/>
-		{% endblock %}
-		{% for category in categories %}
-			<h2>
-				<li class="ml-4">
-					<a href="{{path('category_show', {categoryName: category.name})}}" class="dark">
-						{{ category.name|capitalize }}
-					</a>
-				</li>
-			</h2>
-		{% endfor %}
-	</div>
-{% endblock %}
+    <div class="category_index main">
+        {% block header %}
+            <h1>
+                Choississez une catégorie:
+            </h1>
+            <hr />
+        {% endblock header %}
+        {% for category in categories %}
+            <h2>
+                <li class="ml-4">
+                    <a href="{{
+                        path(
+                            'category_show',
+                            { categoryName: category.name }
+                        )
+                        }}"
+                        class="dark">
+                        {{ category.name|capitalize }}
+                    </a>
+                </li>
+            </h2>
+        {% endfor %}
+    </div>
+{% endblock body %}

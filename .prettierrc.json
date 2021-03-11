@@ -1,0 +1,26 @@
+{
+    "printWidth": 80,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "trailingComma": "es5",
+    "twigPrintWidth": 80,
+    "twigAlwaysBreakObjects": false,
+    "twigOutputEndblockName": true,
+    "twigMultiTags": [
+        "nav,endnav",
+        "switch,case,default,endswitch",
+        "ifchildren,endifchildren",
+        "cache,endcache",
+        "js,endjs"
+    ],
+    "phpVersion": "7.4",
+    "trailingCommaPHP": true,
+    "braceStyle": "psr-2",
+    "arrowParens": "always",
+    "vueIndentScriptAndStyle": true
+}

@@ -104,10 +104,14 @@
             color: $danger;
         }
         .input-group {
+            width: 75%;
             textarea {
                 min-height: 10em;
             }
-            width: 75%;
+            input[type="checkbox"] {
+                margin-right: 0.5em;
+                margin-left: 0.75em;
+            }
         }
         .form-control {
             border-color: $primary;

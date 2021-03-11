@@ -1,32 +1,38 @@
 {# templates/program/show.html.twig #}
 {% extends '_fullbase.html.twig' %}
 {% block title %}
-	{{ actor.name }}
-	description
-{% endblock %}
+    {{ actor.name }} description
+{% endblock title %}
 
 {% block body %}
-	<div class="program_show main">
-		<div class="media">
-			<img class="align-self-start mr-3" src="{{actor.photo}}" alt="{{ actor.name }} photo">
+    <div class="program_show main">
+        <div class="media">
+            <img class="align-self-start mr-3" src="{{ actor.photo }}" alt="{{ actor.name }} photo" />
+            <div class="media-body">
+                <hr />
+                <h1>
+                    {{ actor.name|upper }}
+                </h1>
 
-			<div class="media-body">
-				<h1>{{ actor.name|upper }}</h1>
-				<hr/>
-				<h5>Séries dans lesquelles à joué l'acteur:</h5>
-				<ul>
-					{% for program in actor.programs %}
-						<li>
-							{# TODO Lien vers le nom d'une route #}
-							<a class="black" href="{{path('program_show', {program: program.id})}}">
-								{{program.title}}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-
-	</div>
-
-{% endblock %}
+                <hr />
+                <h5>Séries dans lesquelles à joué l'acteur:</h5>
+                <ul>
+                    {% for program in actor.programs %}
+                        <li>
+                            {# TODO Lien vers le nom d'une route #}
+                            <a class="brown"
+                                href="{{
+                                path(
+                                    'program_show',
+                                    { program: program.id }
+                                )
+                                }}">
+                                {{ program.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

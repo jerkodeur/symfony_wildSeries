@@ -10,34 +10,47 @@
 		</div>
 	{% endblock %}
 	{{ form_start(form) }}
+
+	{# Title #}
 	{{ form_label(form.title, 'Titre *') }}
 	<div class="input-group mb-3">
 		{{ form_widget(form.title, {'attr': {'class' : 'form-control'}}) }}
 	</div>
 	<span class="message_error">{{ form_errors(form.title)}}</span>
-
 	{{ form_help(form.title) }}
+
+	{# summary #}
 	{{ form_label(form.summary, 'Description *') }}
 	<div class="input-group mb-3">
 		{{ form_widget(form.summary, {'attr': {'class' : 'form-control'}}) }}
 	</div>
 	<span class="message_error">{{ form_errors(form.summary)}}</span>
-
 	{{ form_help(form.summary) }}
+
+	{# Poster #}
 	{{ form_label(form.poster, 'Url de l\'image') }}
 	<div class="input-group mb-3">
 		{{ form_widget(form.poster, {'attr': {'class' : 'form-control'}}) }}
 	</div>
 	<span class="message_error">{{ form_errors(form.poster)}}</span>
+	{{ form_help(form.poster) }}
 
-		{{ form_help(form.poster) }}
-		{{ form_label(form.category, 'Catégorie') }}
+	{# Category #}
+	{{ form_label(form.category, 'Catégorie') }}
 	<div class="input-group mb-4">
 		{{ form_widget(form.category, {'attr': {'class' : 'form-control text-capitalize'}}) }}
 	</div>
 	<span class="message_error">{{ form_errors(form.category)}}</span>
-
 	{{ form_help(form.category) }}
+
+	{# Actors #}
+	{{ form_label(form.actors, 'Acteurs') }}
+	<div class="input-group background-light mb-4">
+		{{ form_widget(form.actors, {'attr': {'class' : 'text-capitalize'}}) }}
+	</div>
+	<span class="message_error">{{ form_errors(form.actors)}}</span>
+	{{ form_help(form.actors) }}
+
 
 	<button type="submit" class="btn btn-dark mb-2">Créer la nouvelle série</button>
 		{{ form_end(form) }}
