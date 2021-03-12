@@ -23,12 +23,13 @@ class ProgramType extends AbstractType
                 'required' => false
             ])
             ->add('category', null, ['choice_label' => 'name'])
+            //TODO Declare specific EntityType
             ->add('actors', EntityType::class, [
                 'class' => Actor::class,
                 'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true,
-                'by_reference' => false
+                'multiple' => true, // Authorize multiple choice
+                'expanded' => true, // Transform multiple select to checkboxes
+                'by_reference' => false // For manyToMany relation in the inversed side
             ]);
     }
 
