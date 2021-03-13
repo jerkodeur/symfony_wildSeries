@@ -40,7 +40,8 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("program/{program_slug}", methods={"GET"}, name="show")
+     * @Route("program/{program_slug<[a-z-]*>}", methods={"GET"}, name="show")
+     *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      */
     //TODO find by entity object
@@ -94,7 +95,8 @@ class ProgramController extends AbstractController
     /**
      * Return the needed program season vue
      *
-     * @Route("program/{program_slug}/season/{season<\d+>}", methods={"GET"}, name="show_season")
+     * @Route("program/{program_slug<[a-z-]*>}/season/{season<\d+>}", methods={"GET"}, name="show_season")
+     *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -119,7 +121,8 @@ class ProgramController extends AbstractController
     /**
      * Return the program season episode vue
      *
-     * @Route("program/{program_slug}/season/{season<\d+>}/episode/{ep_slug}", methods={"GET"}, name="episode_show")
+     * @Route("program/{program_slug<[a-z-]*>}/season/{season<\d+>}/episode/{ep_slug<[a-z-]*>}", methods={"GET"}, name="episode_show")
+     *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"ep_slug": "slug"} })
      *
@@ -136,7 +139,8 @@ class ProgramController extends AbstractController
     /**
      * Create a new season for the program
      *
-     * @Route("program/{program_slug}/new", methods={"GET","POST"}, name="season_new")
+     * @Route("program/{program_slug<[a-z-]*>}/new", methods={"GET","POST"}, name="season_new")
+     *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -166,7 +170,8 @@ class ProgramController extends AbstractController
     /**
      * Create a new episode
      *
-     * @Route("program/{program_slug}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
+     * @Route("program/{program_slug<[a-z-]*>}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
+     *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
