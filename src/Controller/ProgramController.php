@@ -9,21 +9,23 @@ use App\Entity\Season;
 use App\Form\EpisodeType;
 use App\Form\ProgramType;
 use App\Form\SeasonType;
+use App\Service\Slugify;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 //TODO Prefix a route for the entire class
 /**
- * @Route("/programs", name="program_")
+ * @Route("/", name="program_")
  * */
 
 class ProgramController extends AbstractController
 {
     //TODO Create a route with Annotations
     /**
-     * @Route("/", methods={"GET"}, name="index")
+     * @Route("/programs", methods={"GET"}, name="index")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -38,7 +40,8 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{program<\d+>}", methods={"GET"}, name="show")
+     * @Route("program/{program_slug}", methods={"GET"}, name="show")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      */
     //TODO find by entity object
     public function show(Program $program): Response
@@ -61,19 +64,21 @@ class ProgramController extends AbstractController
     /**
      * Create a new program
      *
-     * @Route("/new", methods={"GET","POST"}, name="new")
+     * @Route("program/new", methods={"GET","POST"}, name="new")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($program);
             $entityManager->flush();
@@ -89,7 +94,8 @@ class ProgramController extends AbstractController
     /**
      * Return the needed program season vue
      *
-     * @Route("/{program<\d+>}/seasons/{season<\d+>}", methods={"GET"}, name="show_season")
+     * @Route("program/{program_slug}/season/{season<\d+>}", methods={"GET"}, name="show_season")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -113,11 +119,9 @@ class ProgramController extends AbstractController
     /**
      * Return the program season episode vue
      *
-     * @Route("/{program<\d+>}/seasons/{season<\d+>}/episodes/{episode<\d+>}", methods={"GET"}, name="episode_show")
-     *
-     * @param \App\Entity\Program $program
-     * @param \App\Entity\Season $season
-     * @param \App\Entity\Episode $episode
+     * @Route("program/{program_slug}/season/{season<\d+>}/episode/{ep_slug}", methods={"GET"}, name="episode_show")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"ep_slug": "slug"} })
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -132,7 +136,8 @@ class ProgramController extends AbstractController
     /**
      * Create a new season for the program
      *
-     * @Route("/{program<\d+>}/new", methods={"GET","POST"}, name="season_new")
+     * @Route("program/{program_slug}/new", methods={"GET","POST"}, name="season_new")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Program $program
@@ -161,7 +166,8 @@ class ProgramController extends AbstractController
     /**
      * Create a new episode
      *
-     * @Route("/{program<\d+>}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
+     * @Route("program/{program_slug}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Program $program
@@ -194,7 +200,10 @@ class ProgramController extends AbstractController
     /**
      * Show the current actor informations
      *
-     * @Route("/{program<\d+>}/actor/{actor<\d+>}", name="actor_show")
+     * @Route("program/{program_slug<[a-z-]*>}/actor/{actor_slug<[a-z-]*>}", name="actor_show")
+     *
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @ParamConverter("actor", class="App\Entity\Actor", options={"mapping": {"actor_slug": "slug"} })
      *
      * @param \App\Entity\Program $program
      * @param \App\Entity\Actor $actor
@@ -206,7 +215,6 @@ class ProgramController extends AbstractController
         return $this->render('actor/show.html.twig', [
             'program' => $program,
             'actor' => $actor,
-            // 'programs' => $actor->getPrograms()
         ]);
     }
 }

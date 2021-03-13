@@ -7,7 +7,9 @@
 {% block body %}
 	<div class="program_show main">
 		<div class="media">
-			<img class="align-self-start mr-3" src="{{ actor.photo }}" alt="{{ actor.name }} photo"/>
+			{% if actor.photo %}
+				<img class="align-self-start mr-3" src="{{ actor.photo }}" alt="{{ actor.name }} photo"/>
+			{% endif %}
 			<div class="media-body">
 				<hr/>
 				<h1>
@@ -21,7 +23,7 @@
 					{% for program in actor.programs %}
 						<li>
 							{# TODO Lien vers le nom d'une route #}
-							<a class="brown" href="{{ path( 'program_show', { program: program.id } ) }}">
+							<a class="brown" href="{{ path( 'program_show', { program_slug: program.slug} ) }}">
 								{{ program.title }}
 							</a>
 						</li>

@@ -6,6 +6,7 @@ use Faker\Factory as Factory;
 use Faker;
 use App\Entity\Actor;
 use App\Entity\Program;
+use App\Service\Slugify;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -31,6 +32,13 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
         ]
     ];
 
+    private $slugify;
+
+    public function __construct(Slugify $slugify)
+    {
+        $this->slugify = $slugify;
+    }
+
     public function load(ObjectManager $manager)
     {
         // persist raw datas
@@ -38,6 +46,7 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
             $actor = new Actor();
             $actor->setName($name);
             $actor->setPhoto($datas['photo']);
+            $actor->setSlug($this->slugify->generate($actor->getName()));
             foreach ($datas['programs'] as $program) {
                 $actor->addProgram($this->getReference($program));
             };
@@ -49,7 +58,7 @@ class ActorFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 10; $i++) {
             $actor = new Actor();
             $actor->setName($faker->name);
-            $actor->setPhoto($faker->imageUrl(500, 750));
+            $actor->setSlug($this->slugify->generate($actor->getName()));
             $rand = random_int(1, 3);
             for ($j = 0; $j <= $rand; $j++) {
                 $actor->addProgram($this->getReference('program_' . $faker->numberBetween(0, 5)));

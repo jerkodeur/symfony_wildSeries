@@ -12,12 +12,12 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210308213621 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE actor (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -29,7 +29,7 @@ final class Version20210308213621 extends AbstractMigration
         $this->addSql('ALTER TABLE season RENAME INDEX idx_f0e45ba9e12deda1 TO IDX_F0E45BA93EB8070A');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE actor_program DROP FOREIGN KEY FK_B01827EE10DAF24A');
@@ -38,5 +38,10 @@ final class Version20210308213621 extends AbstractMigration
         $this->addSql('ALTER TABLE episode RENAME INDEX idx_ddaa1cda4ec001d1 TO IDX_DDAA1CDA68756988');
         $this->addSql('DROP INDEX UNIQ_F0E45BA996901F54 ON season');
         $this->addSql('ALTER TABLE season RENAME INDEX idx_f0e45ba93eb8070a TO IDX_F0E45BA9E12DEDA1');
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
     }
 }

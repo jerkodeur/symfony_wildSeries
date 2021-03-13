@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210309114524 extends AbstractMigration
+final class Version20210313103640 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,13 +20,13 @@ final class Version20210309114524 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_F0E45BA996901F54 ON season');
+        $this->addSql('ALTER TABLE actor ADD slug VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_F0E45BA996901F54 ON season (number)');
+        $this->addSql('ALTER TABLE actor DROP slug');
     }
 
     public function isTransactional(): bool

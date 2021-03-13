@@ -1,42 +1,42 @@
 {% extends '_fullbase.html.twig' %}
 
 {% block title %}
-    All programs
+	All programs
 {% endblock title %}
 {% block nav_r_items %}
-    <a href="{{ path('program_new') }}">
-        <button type="button" class="btn btn-hoverLight">Nouvelle série</button>
-    </a>
+	<a href="{{ path('program_new') }}">
+		<button type="button" class="btn btn-hoverLight">Nouvelle série</button>
+	</a>
 {% endblock nav_r_items %}
 {% block body %}
-    <div class="programs main">
-        {% block header %}
-            <div class="header">
-                <h1>
-                    Liste des séries disponibles:
-                </h1>
-                <hr />
-            </div>
-        {% endblock header %}
-        {# TODO Twig: boucler avec for #}
-        {% for program in programs %}
-            <div>
-                {# TODO Twig: afficher l'index de la boucle #}
-                <a href="{{ path('program_show', { program: program.id }) }}">
-                    <h2>
-                        {{ loop.index }}
-                        /
-                        {{ program.title }}
-                        - Catégorie :
-                        {{ program.category.name }}
-                    </h2>
-                </a>
-                <p class="pl-4">
-                    {{ program.summary }}
-                </p>
-            </div>
-        {% else %}
-            Aucune série trouvée.
-        {% endfor %}
-    </div>
+	<div class="programs main">
+		{% block header %}
+			<div class="header">
+				<h1>
+					Liste des séries disponibles:
+				</h1>
+				<hr/>
+			</div>
+		{% endblock header %}
+		{# TODO Twig: boucler avec for #}
+		{% for program in programs %}
+			<div>
+				{# TODO Twig: afficher l'index de la boucle #}
+				<a href="{{ path('program_show', { program_slug: program.slug}) }}">
+					<h2>
+						{{ loop.index }}
+						/
+						{{ program.title }}
+						- Catégorie :
+						{{ program.category.name }}
+					</h2>
+				</a>
+				<p class="pl-4">
+					{{ program.summary }}
+				</p>
+			</div>
+		{% else %}
+			Aucune série trouvée.
+		{% endfor %}
+	</div>
 {% endblock body %}
