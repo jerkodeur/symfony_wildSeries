@@ -13,7 +13,7 @@
 		{% endblock %}
 		<div>
 			{% for program in programs %}
-				<a href="{{path('program_show', {program_slug: program.slug})}}">
+				<a href="{{path('program_show', {program: program.slug})}}">
 					<h2>
 						{{program.title}}
 					</h2>

@@ -23,7 +23,7 @@
 					{% for program in actor.programs %}
 						<li>
 							{# TODO Lien vers le nom d'une route #}
-							<a class="brown" href="{{ path( 'program_show', { program_slug: program.slug} ) }}">
+							<a class="brown" href="{{ path( 'program_show', { program: program.slug} ) }}">
 								{{ program.title }}
 							</a>
 						</li>

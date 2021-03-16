@@ -23,7 +23,7 @@
 						<hr/>
 						{% for episode in episodes %}
 							<li>
-								<a class="dark" href={{path('program_episode_show', {program_slug: program.slug, season: season.id, episode: episode.id} )}}>Episode
+								<a class="dark" href={{path('program_episode_show', {program: program.slug, season: season.id, episode: episode.id} )}}>Episode
 									{{episode.number}}
 									:
 									{{episode.title}}
@@ -32,7 +32,7 @@
 						{% endfor %}
 					</ul>
 				</div>
-				<a class="black m-2" href="{{ path('program_show', {program_slug: program.slug}) }}">
+				<a class="black m-2" href="{{ path('program_show', {program: program.slug}) }}">
 					Retour vers la liste des saisons
 				</a>
 			</div>

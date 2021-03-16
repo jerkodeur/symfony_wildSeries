@@ -22,7 +22,7 @@
 		{% for program in programs %}
 			<div>
 				{# TODO Twig: afficher l'index de la boucle #}
-				<a href="{{ path('program_show', { program_slug: program.slug}) }}">
+				<a href="{{ path('program_show', { program: program.slug}) }}">
 					<h2>
 						{{ loop.index }}
 						/
