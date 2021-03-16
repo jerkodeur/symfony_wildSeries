@@ -10,11 +10,14 @@ use App\Form\EpisodeType;
 use App\Form\ProgramType;
 use App\Form\SeasonType;
 use App\Service\Slugify;
+use Doctrine\ORM\Query\Expr\From;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 //TODO Prefix a route for the entire class
 /**
@@ -40,9 +43,53 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("program/{program_slug<[a-z-]*>}", methods={"GET"}, name="show")
+     * Create a new program
      *
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @Route("program/new", methods={"GET","POST"}, name="new")
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
+    {
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($program);
+            $entityManager->flush();
+
+            //TODO Send an Email with mailer
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_from'))
+                ->subject('Une nouvelle série a été créé !')
+                ->html($this->renderView('program/newProgramMail.html.twig', [
+                    'program' => $program,
+                    'url' => $this->getParameter('base_dev_url') . 'program/' . $program->getSlug()
+                ]));
+            $mailer->send($email);
+
+            return $this->redirectToRoute(
+                'program_show',
+                ['program' => $program->getSlug()]
+            );
+        }
+
+        return $this->render('program/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("program/{program<[a-z-]*>}", methods={"GET"}, name="show")
+     *
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      */
     //TODO find by entity object
     public function show(Program $program): Response
@@ -63,41 +110,11 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * Create a new program
-     *
-     * @Route("program/new", methods={"GET","POST"}, name="new")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function new(Request $request, Slugify $slugify): Response
-    {
-        $program = new Program();
-        $form = $this->createForm(ProgramType::class, $program);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $slugify->generate($program->getTitle());
-            $program->setSlug($slug);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($program);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('program_index');
-        }
-
-        return $this->render('program/new.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
      * Return the needed program season vue
      *
-     * @Route("program/{program_slug<[a-z-]*>}/season/{season<\d+>}", methods={"GET"}, name="show_season")
+     * @Route("program/{program<[a-z-]*>}/season/{season<\d+>}", methods={"GET"}, name="show_season")
      *
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -121,10 +138,10 @@ class ProgramController extends AbstractController
     /**
      * Return the program season episode vue
      *
-     * @Route("program/{program_slug<[a-z-]*>}/season/{season<\d+>}/episode/{ep_slug<[a-z-]*>}", methods={"GET"}, name="episode_show")
+     * @Route("program/{program<[a-z-]*>}/season/{season<\d+>}/episode/{episode<[a-z-]*>}", methods={"GET"}, name="episode_show")
      *
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
-     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"ep_slug": "slug"} })
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"} })
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -139,9 +156,9 @@ class ProgramController extends AbstractController
     /**
      * Create a new season for the program
      *
-     * @Route("program/{program_slug<[a-z-]*>}/new", methods={"GET","POST"}, name="season_new")
+     * @Route("program/{program<[a-z-]*>}/new", methods={"GET","POST"}, name="season_new")
      *
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Program $program
@@ -158,7 +175,13 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($season);
             $entityManager->flush();
-            return $this->redirectToRoute('program_show', ['program' => $program->getId()]);
+            return $this->redirectToRoute(
+                'program_show_season',
+                [
+                    'program' => $program->getSlug(),
+                    'season' => $season->getNumber()
+                ]
+            );
         }
 
         return $this->render('season/new.html.twig', [
@@ -170,9 +193,9 @@ class ProgramController extends AbstractController
     /**
      * Create a new episode
      *
-     * @Route("program/{program_slug<[a-z-]*>}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
+     * @Route("program/{program<[a-z-]*>}/season/{season<\d+>}/new", methods={"GET", "POST"}, name="episode_new")
      *
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \App\Entity\Program $program
@@ -180,18 +203,33 @@ class ProgramController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function EpisodeNew(Request $request, Program $program, Season $season): Response
+    public function EpisodeNew(Request $request, Program $program, Season $season, MailerInterface $mailer, Slugify $slugify): Response
     {
         $episode = new Episode;
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $episode->setSeason($season);
+            $episode->setSlug($slugify->generate($episode->getTitle()));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($episode);
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_from'))
+                ->subject('Un nouvel épisode a été ajouté à la série ' . $program->getTitle() . ' (saison ' . $season->getNumber()  . ')')
+                ->html($this->renderView('episode/newEpisodeMail.html.twig', [
+                    'program' => $program,
+                    'season' => $season,
+                    'episode' => $episode,
+                    'url' => $this->getParameter('base_dev_url') . 'program/' . $program->getSlug() . '/season/' . $season->getNumber() . '/episode/' . $episode->getSlug()
+                ]));
+
+            $mailer->send($email);
+
             return $this->redirectToRoute('program_episode_new', [
-                'program' => $program->getId(),
+                'program' => $program->getSlug(),
                 'season' => $season->getId()
             ]);
         }
@@ -205,9 +243,9 @@ class ProgramController extends AbstractController
     /**
      * Show the current actor informations
      *
-     * @Route("program/{program_slug<[a-z-]*>}/actor/{actor_slug<[a-z-]*>}", name="actor_show")
+     * @Route("program/{program<[a-z-]*>}/actor/{actor_slug<[a-z-]*>}", name="actor_show")
      *
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_slug": "slug"} })
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      * @ParamConverter("actor", class="App\Entity\Actor", options={"mapping": {"actor_slug": "slug"} })
      *
      * @param \App\Entity\Program $program

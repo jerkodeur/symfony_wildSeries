@@ -1,0 +1,24 @@
+{% extends "_baseEmail.html.twig" %}
+{% block page_title %}{% endblock %}
+{% block content %}
+	<div class="main">
+		<h1>Nouvel épisode pour la série
+			{{program.title}}
+			- Saison
+			{{season.number}}
+		</h1>
+		<hr/>
+		<p>Episode
+			{{episode.number}}
+			-
+			<strong>{{episode.title}}</strong>
+		</p>
+		<p>
+			{{episode.synopsis}}
+		</p>
+		<hr/>
+		<p>
+			<a href={{url}} class="black">Retrouver plus d'info sur notre site</a>
+		</p>
+	</div>
+{% endblock %}
