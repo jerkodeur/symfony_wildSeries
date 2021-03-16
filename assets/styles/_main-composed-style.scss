@@ -46,8 +46,19 @@
 }
 
 .background-light {
-    border: 1pt $secondary solid;
+    @extend .wrap-box;
     background-color: $white;
+}
+
+.wrap-box {
+    border: 1pt $secondary solid;
     padding: 0.5em 1.5em 0.5em 0.5em;
     border-radius: 5px;
+}
+
+.flex-col-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
