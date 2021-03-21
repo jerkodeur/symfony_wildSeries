@@ -1,0 +1,21 @@
+{# templates/category/_index.html.twig #}
+
+<ul>
+    {% for category in categories %}
+        <li class="ml-4">
+            <h4>
+                <a href="{{
+                    path(
+                        'category_show',
+                        { categoryName: category.name }
+                    )
+                    }}"
+                    class="dark">
+                    {{ category.name|capitalize }}
+                </a>
+            </h4>
+        </li>
+    {% else %}
+        <li class="text-dark">Aucun catégorie disponible.</li>
+    {% endfor %}
+</ul>

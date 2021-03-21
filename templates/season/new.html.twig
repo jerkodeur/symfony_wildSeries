@@ -1,21 +1,21 @@
 {% extends "_fullbase.html.twig" %}
 
-{% block body %}
+
+{% block title %}
+	<h1>
+		{{ program.title }}
+	</h1>
+{% endblock %}
+
+{% block content %}
 	<div class="main">
-		{% block header %}
-			<div class="header">
-				<h1>
-					{{ program.title }}
-				</h1>
-				<h2>Ajout d'une nouvelle saison</h2>
-				<hr/>
-			</div>
-		{% endblock %}
+		<h2>Ajout d'une nouvelle saison</h2>
+
 		{{ form_start(form) }}
 
 		{# Number of the season #}
 		{{ form_label(form.number, 'Numéro de saison *') }}
-		<div class="input-group mb-3">
+		<div class="input-group mb-3 tynint">
 			{{ form_widget(form.number, { 'attr': {'class' : 'form-control'}}) }}
 		</div>
 		<span class="message_error">{{ form_errors(form.number)}}</span>
@@ -31,7 +31,7 @@
 
 		{# Year #}
 		{{ form_label(form.year, 'Année de sortie') }}
-		<div class="input-group mb-3">
+		<div class="input-group mb-3 int">
 			{{ form_widget(form.year, {'attr': {'class' : 'form-control'}}) }}
 		</div>
 		<span class="message_error">{{ form_errors(form.year)}}</span>
@@ -41,6 +41,7 @@
 		{% do form.program.setRendered() %}
 
 		<button type="submit" class="btn btn-dark mb-2">Créer la nouvelle saison</button>
+
 		{{ form_end(form) }}
 	</div>
 {% endblock %}

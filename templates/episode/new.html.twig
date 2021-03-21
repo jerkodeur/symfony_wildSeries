@@ -1,20 +1,20 @@
+{# templates/episode/new.html.twig #}
 {% extends "_fullbase.html.twig" %}
 
-{% block body %}
+{% block localTitle %}
+	Nouvel épisode
+{% endblock %}
+
+{% block title %}
+	{{ program.title|capitalize ~ ' / Saison ' ~ season.number}}
+	<h2>
+		Création d'un nouvel épisode
+	</h2>
+{% endblock %}
+
+{% block content %}
 	<div class="main">
-		{% block header %}
-			<div class='header'>
-				<h1>
-					{{ program.title }}
-					/ Saison
-					{{ season.number }}
-				</h1>
-				<h2>
-					Ajout d'un nouvel épisode
-				</h2>
-				<hr/>
-			</div>
-		{% endblock %}
+
 		{{ form_start(form) }}
 
 		{# Title of the episode #}
@@ -42,6 +42,18 @@
 		{{ form_help(form.synopsis) }}
 
 		<button type="submit" class="btn btn-dark mb-2">Créer le nouvel épisode</button>
+
 		{{ form_end(form) }}
+
+		{# Back links #}
+		<div class="mt-1 pl-2">
+			<a href="{{ path('program_show_season', { program: program.slug, season: season.id }) }}" class="brown mt-2">
+				Liste des épisodes
+			</a>
+			<span class="px-2 text-dark">-</span>
+			<a href="{{ path('program_show', { program: program.slug }) }}" class="brown mt-2">
+				Index de la série
+			</a>
+		</div>
 	</div>
 {% endblock %}

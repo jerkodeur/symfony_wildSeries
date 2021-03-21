@@ -1,31 +1,79 @@
+{# templates/_base.html.twig #}
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon"
-            type="image/png"
-            href="{{ asset('build/logo.png') }}" />
-        <title>
-            {% block title %}
-                Welcome!
-            {% endblock title %}
-        </title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock stylesheets %}
+	<head>
+		<meta charset="UTF-8"/>
+		<link rel="icon" type="image/png" href="{{ asset('build/logo.png') }}"/>
+		<title>
+			{% block localTitle %}
+				Accueil
+			{% endblock localTitle %}
+			- Wild Series
+		</title>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock stylesheets %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock javascripts %}
-    </head>
-    <body>
-        <header>
-            {% block navbar %}
-            {% endblock navbar %}
-        </header>
-        {% block body %}
-            {% block header %}
-            {% endblock header %}
-        {% endblock body %}
-    </body>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock javascripts %}
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-sm">
+			{% block navbar %}
+				<span class="navbar-brand" href="#">Wild Series</span>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active">
+							<a class="nav-link" aria-current="page" href="/">Accueil</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="/programs/">
+								Séries
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="/categories/">
+								Catégories
+							</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav">
+						{% block nav_r_items %}
+							<li class="nav-item text-light pr-4">
+								{% block nav_r_item1 %}{% endblock %}
+							</li>
+							<li class="nav-item text-light pr-4">
+								{% block nav_r_item2 %}{% endblock %}
+							</li>
+							<li class="nav-item text-light pr-4">
+								{% block nav_r_item3 %}{% endblock %}
+							</li>
+						{% endblock nav_r_items %}
+					</ul>
+				</div>
+			{% endblock navbar %}
+		</nav>
+		{% block main %}
+			<div class="main">
+				<header>
+					{% block header %}
+						<div class="header">
+							<h1>
+								{% block title %}{% endblock %}
+							</h1>
+							<hr/>
+						</div>
+					{% endblock header %}
+				</header>
+				<main>
+					{% block content %}{% endblock %}
+				</main>
+			{% endblock main %}
+		</div>
+	</body>
 </html>

@@ -1,35 +1,47 @@
 {# templates/program/show.html.twig #}
-{% extends '_fullbase.html.twig' %}
+{% extends '_base.html.twig' %}
+
+{% block localTitle %}
+    {{ (program.title|capitalize) ~ ' - Saison ' ~ season.number ~ ' / Episode '
+        ~ episode.number }}
+{% endblock localTitle %}
+
 {% block title %}
-	{{program.title}}
-	Saison
-	{{season.number}}
-	episode
-	{{episode.number}}
-{% endblock %}
+    <h1>
+        {{ program.title }}
+        <hr />Saison {{ "#{season.number} (#{season.year}) - Episode #{episode.number}" }}
+    </h1>
+{% endblock title %}
 
-{% block body %}
-	<div class="episode_show main">
-		<div class="media">
-			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-			<div class="media-body">
-				<h1>{{program.title}}<hr/>
-					Saison
-					{{season.number}}
-					({{season.year}}) - Episode
-					{{episode.number}}
-				</h1>
-				<hr/>
-				<h2 class="font-primary">
-					{{episode.title}}
-				</h2>
-				<hr/>
-				<p>{{episode.synopsis}}</p>
-				<hr/>
-				<a class="brown" href="{{path('program_show_season', {program: program.slug, season: season.id})}}">
-					Retour à la liste des épisodes
-				</a>
-			</div>
-		</div>
-
-	{% endblock %}
+{% block content %}
+    <div class="episode_show main">
+        <div class="media">
+            {# Episode informations #}
+            {% if program.poster %}
+                <img class="align-self-start mr-3"
+                    src="{{ program.poster }}"
+                    alt="{{ program.title }} poster" />
+            {% endif %}
+            <div class="media-body">
+                <h2 class="font-primary">
+                    {{ episode.title }}
+                </h2>
+                <hr />
+                <p>
+                    {{ episode.synopsis }}
+                </p>
+                <hr />
+                {# return back to the list of episodes #}
+                <a class="brown"
+                    href="{{
+                    path(
+                        'program_show_season',
+                        { program: program.slug, season: season.id }
+                    )
+                    }}">
+                    Retour à la liste des épisodes
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

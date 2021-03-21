@@ -1,0 +1,15 @@
+{# templates/program/_index.html #}
+
+<ul>
+    {% for program in programs %}
+        <li>
+            {# TODO Lien vers le nom d'une route #}
+            <a class="brown"
+                href="{{ path('program_show', { program: program.slug }) }}">
+                {{ program.title }}
+            </a>
+        </li>
+    {% else %}
+        <li class="text-brown">Aucune série trouvée.</li>
+    {% endfor %}
+</ul>

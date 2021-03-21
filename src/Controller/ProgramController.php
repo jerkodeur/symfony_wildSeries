@@ -150,7 +150,8 @@ class ProgramController extends AbstractController
         return $this->render('episode/show.html.twig', [
             'program' => $program,
             'season' => $season,
-            'episode' => $episode
+            'episode' => $episode,
+            'comments' => $episode->getComments()
         ]);
     }
     /**

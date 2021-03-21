@@ -1,0 +1,19 @@
+{# templates/actor/indx.html.twig #}
+
+<ul>
+    {% for actor in program.actors %}
+        <li>
+            <a class="dark"
+                href="{{
+                path(
+                    'program_actor_show',
+                    { program: program.slug, actor_slug: actor.slug }
+                )
+                }}">
+                {{ actor.name }}
+            </a>
+        </li>
+    {% else %}
+        <li class="text-dark">Aucun acteur pour cette série</li>
+    {% endfor %}
+</ul>

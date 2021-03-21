@@ -1,8 +1,10 @@
-{% extends '_fullbase.html.twig' %}
+{# templates/category/index.html.twig #}
+{% extends '_base.html.twig' %}
 
-{% block title %}
-    All program categories
-{% endblock title %}
+{% block localTitle %}
+    Categories
+{% endblock localTitle %}
+
 {% block nav_r_items %}
     <a href="{{ path('category_new') }}">
         <button type="button" class="btn btn-hoverLight">
@@ -10,28 +12,13 @@
         </button>
     </a>
 {% endblock nav_r_items %}
-{% block body %}
+
+{% block title %}
+    Choississez une catégorie:
+{% endblock title %}
+
+{% block content %}
     <div class="category_index main">
-        {% block header %}
-            <h1>
-                Choississez une catégorie:
-            </h1>
-            <hr />
-        {% endblock header %}
-        {% for category in categories %}
-            <h2>
-                <li class="ml-4">
-                    <a href="{{
-                        path(
-                            'category_show',
-                            { categoryName: category.name }
-                        )
-                        }}"
-                        class="dark">
-                        {{ category.name|capitalize }}
-                    </a>
-                </li>
-            </h2>
-        {% endfor %}
+        {% include 'category/_index.html.twig' %}
     </div>
-{% endblock body %}
+{% endblock content %}

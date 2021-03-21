@@ -1,28 +1,38 @@
-{% extends '_fullbase.html.twig' %}
+{# templates/category/show.html.twig #}
+{% extends '_base.html.twig' %}
 
-{% block body %}
-	<div class="category_show main">
-		{% block header %}
-			<div class='header'>
-				<h1>
-					Séries trouvées pour la catégorie
-					{{category.name}}
-				</h1>
-				<hr/>
-			</div>
-		{% endblock %}
-		<div>
-			{% for program in programs %}
-				<a href="{{path('program_show', {program: program.slug})}}">
-					<h2>
-						{{program.title}}
-					</h2>
-				</a>
-				<p class="ml-4">{{program.summary}}
-				</p>
-			{% else %}
-				Aucune série trouvée.
-			{% endfor %}
-		</div>
-	</div>
-{% endblock %}
+{% block localTitle %}
+    Séries{% if (category.name|first|lower) matches '/[aeiouh]/' %}
+        {{ "d'" ~ (category.name|lower) }}
+    {% else %}
+        {{ ' catégorie ' ~ (category.name|lower) }}
+    {% endif %}
+{% endblock localTitle %}
+
+{% block title %}
+    Séries trouvées pour la catégorie {{ category.name }}
+{% endblock title %}
+
+{% block content %}
+    <div class="category_show main">
+        <div>
+            {# List of programs #}
+            {% for program in programs %}
+                <a href="{{ path('program_show', { program: program.slug }) }}">
+                    <h2>
+                        {{ program.title }}
+                    </h2>
+                </a>
+                <p class="ml-4">
+                    {{ program.summary }}
+                </p>
+            {% else %}
+                Aucune série trouvée.
+            {% endfor %}
+        </div>
+        {# Back to the list of categories #}
+        <a class="brown" href="{{ path('category_index') }}">
+            Retour à la liste des catégories
+        </a>
+    </div>
+{% endblock content %}

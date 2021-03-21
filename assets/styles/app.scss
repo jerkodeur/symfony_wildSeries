@@ -1,4 +1,4 @@
-@import '@imports';
+@import "@imports";
 
 .navbar {
     background-color: $dark !important;
@@ -22,6 +22,7 @@
         }
     }
 }
+
 .main {
     color: $dark;
     width: 75%;
@@ -31,13 +32,9 @@
             @extend .link-black;
         }
     }
-    h1 {
-        color: $secondary;
-        font-family: $iceberg;
-    }
     h2 {
         font-family: $stylish;
-        color: $black;
+        color: $dark;
     }
     h5 {
         margin-left: 0.5em;
@@ -60,21 +57,31 @@
             color: $secondary;
             font-family: $iceberg;
         }
+        h2 {
+            color: $dark;
+        }
     }
     .season_list {
         @extend .wrap-box;
-        display: flex;
         background-color: $light;
         width: 100%;
         li {
             list-style-type: none;
         }
-        p {
+        h5 {
             font-weight: bold;
             padding-top: 0.5em;
         }
         hr {
             width: 90%;
+        }
+    }
+    &.programs {
+        li {
+            list-style-type: none;
+        }
+        h3 {
+            font-family: $iceberg;
         }
     }
     &.program_show {
@@ -88,10 +95,15 @@
             height: 500px;
         }
     }
+    .category_index {
+        h4 {
+            font-family: $iceberg;
+        }
+    }
     form {
         @extend .wrap-box;
         @extend .flex-col-center;
-        width: 50%;
+        width: 100%;
         margin: auto;
         background-color: $light;
         .form_errors {
@@ -99,10 +111,16 @@
         }
         .input-group {
             width: 75%;
+            &.int {
+                width: 15%;
+            }
+            &.tynint {
+                width: 10%;
+            }
             textarea {
                 min-height: 10em;
             }
-            input[type='checkbox'] {
+            input[type="checkbox"] {
                 margin-right: 0.5em;
                 margin-left: 0.75em;
                 height: 0.9em;

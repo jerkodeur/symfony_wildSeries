@@ -1,35 +1,32 @@
-{% extends '_fullbase.html.twig' %}
+{# templates/homepage/index.html.twig #}
+{% extends '_base.html.twig' %}
 
-{% block title %}
-	Wild séries - Accueil
-{% endblock title %}
+{% block localTitle %}
+    Accueil
+{% endblock localTitle %}
 
 {% block nav_r_items %}
-	{% if app.user %}
-		<a href="{{ path('logout') }}">
-			<button type="button" class="btn btn-hoverLight">
-				Déconnexion
-			</button>
-		</a>
-	{% else %}
-		<a href="{{ path('login') }}">
-			<button type="button" class="btn btn-hoverLight">
-				Connexion
-			</button>
-		</a>
-	{% endif %}
+    {% if app.user %}
+        <a href="{{ path('logout') }}">
+            <button type="button" class="btn btn-hoverLight">
+                Déconnexion
+            </button>
+        </a>
+    {% else %}
+        <a href="{{ path('login') }}">
+            <button type="button" class="btn btn-hoverLight">Connexion</button>
+        </a>
+    {% endif %}
 {% endblock nav_r_items %}
 
-{% block body %}
-	<div class="programs main">
-		{% block header %}
-			<div class="header">
-				<h1>
-					Bienvenue sur le site de Wild Séries
-				</h1>
-				<hr/>
-			</div>
-		{% endblock header %}
-		<p>Retrouve plein d'infos sur tes séries et tes acteurs préférés !!!</p>
-	</div>
-{% endblock body %}
+{% block title %}
+    Bienvenue sur le site de Wild Séries
+{% endblock title %}
+
+{% block content %}
+    <div class="programs main">
+        <p>
+            Retrouve plein d'infos sur tes séries et tes acteurs préférés !!!
+        </p>
+    </div>
+{% endblock content %}

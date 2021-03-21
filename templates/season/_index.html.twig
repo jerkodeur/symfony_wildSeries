@@ -1,41 +1,19 @@
-{% extends '_fullbase.html.twig' %}
+{# templates/season/_index.html.twig #}
 
-{% block title %}Hello SeasonController!
-{% endblock %}
-
-{% block body %}
-	<div class="season_show main">
-		{% block header %}
-			<h1>Saison
-				{{season.number}}
-				de
-				{{program.title}}
-				({{season.year}})</h1>
-			<hr/>
-			<p class="text-black">{{season.description}}</p>
-		{% endblock %}
-		<div class="media">
-			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-			<div class="d-flex flex-column w-100">
-				<div class="season_list">
-					<ul class="w-100">
-						<p class="mt-2 text-black">Liste des épisodes:</p>
-						<hr/>
-						{% for episode in episodes %}
-							<li>
-								<a class="dark" href={{path('program_episode_show', {program: program.slug, season: season.id, episode: episode.id} )}}>Episode
-									{{episode.number}}
-									:
-									{{episode.title}}
-								</a>
-							</li>
-						{% endfor %}
-					</ul>
-				</div>
-				<a class="black m-2" href="{{ path('program_show', {program: program.slug}) }}">
-					Retour vers la liste des saisons
-				</a>
-			</div>
-		</div>
-	</div>
-{% endblock %}
+<ul>
+	{% for season in seasons %}
+		<li>
+			{# TODO Lien vers le nom d'une route #}
+			<a class="brown"
+				href='{{path('program_show_season',{ program: program.slug, season: season.id })}}'>
+				{{ 'Saison ' ~ season.number}}
+				{% if season.year %}
+				-
+				{% endif %}
+				{{ season.year }}
+			</a>
+		</li>
+	{% else %}
+		<li class="text-brown">Aucune saison disponible</li>
+	{% endfor %}
+</ul>

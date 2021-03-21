@@ -1,35 +1,35 @@
 {# templates/program/show.html.twig #}
-{% extends '_fullbase.html.twig' %}
+{% extends '_base.html.twig' %}
+
+{% block localTitle %}
+    {{ actor.name|capitalize }} - description
+{% endblock localTitle %}
+
 {% block title %}
-	{{ actor.name }}
-	description
-{% endblock %}
-{% block body %}
-	<div class="program_show main">
-		<div class="media">
-			{% if actor.photo %}
-				<img class="align-self-start mr-3" src="{{ actor.photo }}" alt="{{ actor.name }} photo"/>
-			{% endif %}
-			<div class="media-body">
-				<hr/>
-				<h1>
-					{{ actor.name|upper }}
-				</h1>
-				<hr/>
-				<h5>
-					Séries dans lesquelles à joué l'acteur:
-				</h5>
-				<ul>
-					{% for program in actor.programs %}
-						<li>
-							{# TODO Lien vers le nom d'une route #}
-							<a class="brown" href="{{ path( 'program_show', { program: program.slug} ) }}">
-								{{ program.title }}
-							</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</div>
-{% endblock %}
+    {{ actor.name|upper }}
+{% endblock title %}
+
+{% block content %}
+    <div class="program_show main">
+        <div class="media">
+            {% if actor.photo %}
+                <img class="align-self-start mr-3"
+                    src="{{ actor.photo }}"
+                    alt="{{ actor.name }} photo" />
+            {% endif %}
+            <div class="media-body">
+                {# List of the programs which the actor played #}
+                <h5>
+                    Séries dans lesquelles à joué l'acteur:
+                </h5>
+                {{
+                    include(
+                        'program/_index.html.twig',
+                        { programs: actor.programs },
+                        with_context = false
+                    )
+                }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,25 +1,21 @@
-{% extends '_fullbase.html.twig' %}
+{# templates/security/login.html.twig #}
+{% extends '_base.html.twig' %}
 
-{% block title %}Connexion
-{% endblock %}
+{% block localTitle %}
+	Connexion
+{% endblock localTitle %}
 
-{% block body %}
-	<div class="programs main">
-		{% block header %}
-			<div class="header">
-				<h1>
-					Saississez vos identifiants:
-				</h1>
-				<hr/>
-			</div>
-		{% endblock header %}
+{% block title %}
+	Nouvelle connexion
+{% endblock title %}
+
+{% block content %}
+	<div class="programs">
 		{% if error %}
 			<div class="alert-box mb-1">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
 
-		<form
-			method="post">
-
+		<form method="post">
 			{# Email #}
 			<label for="inputEmail">Email</label>
 			<div class="input-group mb-3">
@@ -35,6 +31,7 @@
 			{# Token #}
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
+			{# Remember me #}
 			<div class="input-group mb-3">
 				<label>
 					<input type="checkbox" name="_remember_me">
@@ -46,8 +43,9 @@
 				Se connecter
 			</button>
 		</form>
+		{# Link to homepage #}
 		<div class='form-group w-50 m-auto pt-2'>
 			<a href="{{ path('homepage') }}" class="brown">Retour à l'accueil</a>
 		</div>
 	</div>
-{% endblock %}
+{% endblock content %}

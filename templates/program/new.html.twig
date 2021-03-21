@@ -1,14 +1,17 @@
+{# templates/program/new.html.twig #}
 {% extends "_fullbase.html.twig" %}
-{% block body %}
+
+{% block localTitle %}
+	Nouvelle série
+{% endblock %}
+
+{% block title %}
+	Création d'une nouvelle série
+{% endblock title %}
+
+{% block content %}
 <div class="main">
-	{% block header %}
-		<div class='header'>
-			<h1>
-				Ajout d'une nouvelle série
-			</h1>
-			<hr/>
-		</div>
-	{% endblock %}
+
 	{{ form_start(form) }}
 
 	{# Title #}
@@ -51,8 +54,15 @@
 	<span class="message_error">{{ form_errors(form.actors)}}</span>
 	{{ form_help(form.actors) }}
 
-
 	<button type="submit" class="btn btn-dark mb-2">Créer la nouvelle série</button>
-		{{ form_end(form) }}
+
+	{{ form_end(form) }}
+
+	{# Back links #}
+	<div class="mt-1 pl-2">
+		<a href="{{ path('program_index') }}" class="brown mt-2">
+			Retour à la listes des séries
+		</a>
+	</div>
 </div>
 {% endblock %}

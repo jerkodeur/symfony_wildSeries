@@ -1,7 +1,9 @@
+{# templates/_fullbase.html.twig #}
 {% extends '_base.html.twig' %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-sm">
+        {# main navigation site links #}
         <span class="navbar-brand" href="#">Wild Series</span>
         <button class="navbar-toggler"
             type="button"
@@ -28,18 +30,22 @@
                     </a>
                 </li>
             </ul>
+            {# Admin button blocks #}
             <ul class="navbar-nav">
                 {% block nav_r_items %}
                     <li class="nav-item text-light pr-4">
                         {% block nav_r_item1 %}
+
                         {% endblock nav_r_item1 %}
                     </li>
                     <li class="nav-item text-light pr-4">
                         {% block nav_r_item2 %}
+
                         {% endblock nav_r_item2 %}
                     </li>
                     <li class="nav-item text-light pr-4">
                         {% block nav_r_item3 %}
+
                         {% endblock nav_r_item3 %}
                     </li>
                 {% endblock nav_r_items %}

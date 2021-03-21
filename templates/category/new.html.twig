@@ -1,17 +1,19 @@
 {# templates/category/new.html.twig #}
-
 {% extends "_fullbase.html.twig" %}
-{% block body %}
+
+{% block localTitle %}
+	Nouvelle catégorie
+{% endblock %}
+
+{% block title %}
+	Ajout d'une nouvelle catégorie
+{% endblock title %}
+
+{% block content %}
 	<div class="main">
-		{% block header %}
-			<div class='header'>
-				<h1>
-					Ajout d'une nouvelle catégorie
-				</h1>
-				<hr/>
-			</div>
-		{% endblock %}
+
 		{{ form_start(form) }}
+
 		{{ form_label(form.name, 'Nom de la categorie') }}
 		<div
 			class="input-group">
@@ -20,7 +22,10 @@
 		</div>
 		<span class="message_error">{{ form_errors(form.name)}}</span>
 		{{ form_help(form.name) }}
+
 		<button type="submit" class="btn btn-dark mb-2 mt-3">Créer la catégorie</button>
+
 		{{ form_end(form) }}
+
 	</div>
-{% endblock %}
+{% endblock content %}
