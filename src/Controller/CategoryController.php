@@ -7,6 +7,7 @@ use App\Entity\Program;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,21 +68,20 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("category/{categoryName}", methods={"GET"}, name="show")
+     * @Route("category/{category<[a-z-]*>}", methods={"GET"}, name="show")
+     * @ParamConverter("category", class="App\Entity\Category", options={"mapping": {"category": "slug"} })
      *
      * @param string $categoryName
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show(string $categoryName): Response
+    public function show(Category $category): Response
     {
         $doctrine = $this->getDoctrine();
 
         //TODO findOneBy()
         $category = $doctrine
             ->getRepository(Category::class)
-            ->findOneBy([
-                'name' => $categoryName
-            ]);
+            ->findOneBy(['id' => $category]);
 
         //TODO Throw an 404 exception
         if (!$category) {

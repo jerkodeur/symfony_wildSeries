@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -16,12 +18,12 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private string $email;
 
     /**
      * @ORM\Column(type="json")
@@ -29,20 +31,31 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
+     * The hashed password
+     * @ORM\Column
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $bio;
+    private string $bio;
+
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="Author", orphanRemoval=true)
+     */
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -142,5 +155,15 @@ class User implements UserInterface
         $this->bio = $bio;
 
         return $this;
+    }
+
+    /**
+     * Get user comments
+     *
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
     }
 }

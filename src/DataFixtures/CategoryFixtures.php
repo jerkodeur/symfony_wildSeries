@@ -3,11 +3,19 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Service\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixtures extends Fixture
 {
+    private $slug;
+
+    public function __construct(Slugify $slugify)
+    {
+        $this->slug = $slugify;
+    }
+
     const CATEGORIES = [
         'Horreur',
         'Humour',
@@ -23,6 +31,7 @@ class CategoryFixtures extends Fixture
         //TODO Load one fixture
         $category = new Category();
         $category->setName('Aventure');
+        $category->setSlug($this->slug->generate($category->getName()));
         $manager->persist($category);
 
         //TODO Load many features

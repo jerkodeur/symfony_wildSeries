@@ -49,6 +49,7 @@ class Season
     private $description;
 
     /**
+     * @var Collection
      * @ORM\OneToMany(targetEntity=Episode::class, mappedBy="season", orphanRemoval=true)
      */
     private $episodes;

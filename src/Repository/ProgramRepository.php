@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Program;
+use App\Entity\Season;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,19 @@ class ProgramRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Program::class);
+    }
+
+    public function getAllEpisodes(Season $season): array
+    {
+        return $this->createQueryBuilder(alias: "p")
+            ->join("p.episodes", alias: "e")
+            ->join("e.season", alias: "s")
+            ->addSelect("e")
+            ->addSelect("s")
+            ->where("s.id = season_id")
+            ->setParameter("season_id", $season->id)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

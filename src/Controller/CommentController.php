@@ -35,7 +35,6 @@ class CommentController extends AbstractController
 
             return $this->redirectToRoute('comment_index');
         }
-
         return $this->render('comment/new.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
@@ -71,7 +70,7 @@ class CommentController extends AbstractController
     #[Route('/{id}', name: 'comment_delete', methods: ['DELETE'])]
     public function delete(Request $request, Comment $comment): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($comment);
             $entityManager->flush();

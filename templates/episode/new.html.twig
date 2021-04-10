@@ -18,7 +18,7 @@
 		{{ form_start(form) }}
 
 		{# Title of the episode #}
-		{{ form_label(form.title, '* Titre de l\'épisode *') }}
+		{{ form_label(form.title, 'Titre de l\'épisode') }}
 		<div class="input-group mb-3">
 			{{ form_widget(form.title, {'attr': {'class' : 'form-control'}}) }}
 		</div>
@@ -26,7 +26,7 @@
 		{{ form_help(form.title) }}
 
 		{# Number of the episode #}
-		{{ form_label(form.number, '* Numéro de l\'épisode *') }}
+		{{ form_label(form.number, 'Numéro de l\'épisode') }}
 		<div class="input-group mb-3">
 			{{ form_widget(form.number, {'attr': {'class' : 'form-control'}}) }}
 		</div>

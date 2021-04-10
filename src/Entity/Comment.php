@@ -19,7 +19,7 @@ class Comment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
@@ -40,7 +40,7 @@ class Comment
      * @Assert\Range(
      *  min = 1,
      *  max = 5,
-     *  notInRangeMessage = "La note doit être comprise entre {{ min }} et {{ max}}")
+     *  notInRangeMessage = "La note doit être comprise entre {{ min }} et {{ max }}")
      */
     private $rate;
 

@@ -15,7 +15,7 @@
 	{{ form_start(form) }}
 
 	{# Title #}
-	{{ form_label(form.title, 'Titre *') }}
+	{{ form_label(form.title, 'Titre') }}
 	<div class="input-group mb-3">
 		{{ form_widget(form.title, {'attr': {'class' : 'form-control'}}) }}
 	</div>
@@ -23,7 +23,7 @@
 	{{ form_help(form.title) }}
 
 	{# summary #}
-	{{ form_label(form.summary, 'Description *') }}
+	{{ form_label(form.summary, 'Description') }}
 	<div class="input-group mb-3">
 		{{ form_widget(form.summary, {'attr': {'class' : 'form-control'}}) }}
 	</div>

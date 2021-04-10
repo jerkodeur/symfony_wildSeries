@@ -31,6 +31,19 @@
                     {{ episode.synopsis }}
                 </p>
                 <hr />
+                {% if app.user %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit">Laisser un commentaire</button>
+                    {{ form_end(form) }}
+                {% endif %}
+
+                <ul>
+                    {% for comment in comments %}
+                        <li>{{ comment.comment ~ ' ' ~ comment.rate }}</li>
+                    {% endfor %}
+                </ul>
+
                 {# return back to the list of episodes #}
                 <a class="brown"
                     href="{{

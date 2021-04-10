@@ -1,5 +1,6 @@
 {# templates/program/show.html.twig #}
 {% extends '_base.html.twig' %}
+{% set tab = app.request.get('tab') ?: 'summary' %}
 
 {% block localTitle %}
 	{{ program.title }}
@@ -18,20 +19,64 @@
 {% endblock title %}
 
 {% block content %}
+	{% block tabs %}
+		{# Tabs #}
+			<ul class="tabs">
+				{# Summary #}
+				<li {% if tab == 'summary' %} class="selected" {% endif %}>
+					{% if tab != 'summary' %}
+						<a href={{ path('program_show', {'program': program.slug, 'tab': 'summary'}) }} class="dark">Récapitulatif</a>
+					{% else %}
+						Récapitulatif
+					{% endif %}
+				</li>
+				{# Seasons #}
+				<li
+					{% if not seasons %} class="disabled" {% endif %}
+					{% if tab == 'seasons'%} class="selected" {% endif %}
+				>
+				{% if seasons and tab != 'seasons' %}
+						<a href={{ path('program_show', {'program': program.slug, 'tab': 'seasons'}) }} class="dark">Saisons</a>
+					{% else %}
+						Saisons
+					{% endif %}
+				</li>
+				{# Actors #}
+				<li
+					{% if not program.actors %} class="disabled" {% endif %}
+					{% if tab == 'actors' %} class="selected" {% endif %}
+				>
+					{% if program.actors and tab != 'actors' %}
+						<a href={{ path('program_show', {'program': program.slug, 'tab': 'actors'}) }} class="dark">Acteurs</a>
+					{% else %}
+						Acteurs
+					{% endif %}
+
+				</li>
+			</ul>
+	{% endblock %}
 <div class="program_show main">
-	<div
-		class="media">
+
+	<div class="media">
 		{# program poster #}
 		{% if program.poster %}
-			<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster"/>
+			<div class="poster">
+				<img src="{{program.poster}}" alt="{{ program.title }} poster"/>
+			</div>
 		{% endif %}
+
 		{# program informations #}
 		<div class="media-body">
+		{% if tab == 'summary' %}
 			<p>{{ program.summary }}</p>
 			<hr/>
 			<p class="text-black">
-				Catégorie :
-				<span class="danger-text ml-2 text-uppercase">{{ program.category.name }}</span>
+				<strong>Catégorie :</strong>
+				<span class="ml-2 text-uppercase">
+					<a class="brown font-weight-bold" href="{{path('category_show', {category: program.category.slug})}}">
+					{{ program.category.name }}
+					</a>
+				</span>
 			</p>
 			<hr/>
 			{# seasons displays #}
@@ -40,11 +85,17 @@
 			{# actors displays #}
 			<strong class="text-black">Acteurs :</strong>
 			{% include 'actor/_index.html.twig' %}
-			<hr/>
-			{# back to the program list #}
-			<a class="brown" href="{{ path('program_index') }}">
-				Retour à la liste des séries
-			</a>
+		{% endif %}
 		</div>
+	</div>
+	{# back to the program list #}
+	<div class="bottom-nav">
+		<a href="{{ app.request.headers.get('referer') }}">
+			Retour
+		</a>
+		<span class="divider">-</span>
+		<a href={{ path('program_index') }}>
+			Liste des séries
+		</a>
 	</div>
 </div {% endblock content %}

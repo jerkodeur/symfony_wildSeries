@@ -68,7 +68,6 @@ class Program
 
     public function __construct()
     {
-        $this->number = new ArrayCollection();
         $this->actors = new ArrayCollection();
     }
 

@@ -31,8 +31,8 @@
             {% endfor %}
         </div>
         {# Back to the list of categories #}
-        <a class="brown" href="{{ path('category_index') }}">
-            Retour à la liste des catégories
+        <a class="brown" href="{{ app.request.headers.get('referer') }}">
+            Revenir sur la dernière page
         </a>
     </div>
 {% endblock content %}

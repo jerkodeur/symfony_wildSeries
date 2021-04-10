@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Actor;
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\EpisodeType;
 use App\Form\ProgramType;
 use App\Form\SeasonType;
 use App\Service\Slugify;
 use Doctrine\ORM\Query\Expr\From;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Security\Core\Security;
 
 //TODO Prefix a route for the entire class
 /**
@@ -26,6 +30,16 @@ use Symfony\Component\Mime\Email;
 
 class ProgramController extends AbstractController
 {
+    /**
+     * @var Security $security
+     */
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     //TODO Create a route with Annotations
     /**
      * @Route("/programs", methods={"GET"}, name="index")
@@ -138,19 +152,36 @@ class ProgramController extends AbstractController
     /**
      * Return the program season episode vue
      *
-     * @Route("program/{program<[a-z-]*>}/season/{season<\d+>}/episode/{episode<[a-z-]*>}", methods={"GET"}, name="episode_show")
+     * @Route("program/{program<[a-z-]*>}/season/{season<\d+>}/episode/{episode<[a-z-]*>}", methods={"GET", "POST"}, name="episode_show")
      *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"} })
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function episodeShow(Program $program, Season $season, Episode $episode): Response
+    public function episodeShow(Request $request, Program $program, Season $season, Episode $episode): Response
     {
+        $comment = new Comment;
+        $form = $this->createForm(CommentType::class, $comment)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setEpisode($episode);
+            $comment->setAuthor($this->security->getUser());
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            return $this->redirectToRoute('program_episode_show', [
+                'program' => $program->getSlug(),
+                'season' => $season->getId(),
+                'episode' => $episode->getSlug()
+            ]);
+        }
+
         return $this->render('episode/show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'form' => $form->createView(),
             'comments' => $episode->getComments()
         ]);
     }

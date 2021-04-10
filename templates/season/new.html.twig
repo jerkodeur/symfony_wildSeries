@@ -10,11 +10,10 @@
 {% block content %}
 	<div class="main">
 		<h2>Ajout d'une nouvelle saison</h2>
-
 		{{ form_start(form) }}
 
 		{# Number of the season #}
-		{{ form_label(form.number, 'Numéro de saison *') }}
+		{{ form_label(form.number) }}
 		<div class="input-group mb-3 tynint">
 			{{ form_widget(form.number, { 'attr': {'class' : 'form-control'}}) }}
 		</div>
@@ -22,7 +21,7 @@
 		{{ form_help(form.number) }}
 
 		{# Description #}
-		{{ form_label(form.description, 'Description ') }}
+		{{ form_label(form.description) }}
 		<div class="input-group mb-3">
 			{{ form_widget(form.description, {'attr': {'class' : 'form-control'}}) }}
 		</div>
@@ -30,7 +29,7 @@
 		{{ form_help(form.description) }}
 
 		{# Year #}
-		{{ form_label(form.year, 'Année de sortie') }}
+		{{ form_label(form.year) }}
 		<div class="input-group mb-3 int">
 			{{ form_widget(form.year, {'attr': {'class' : 'form-control'}}) }}
 		</div>
@@ -43,5 +42,10 @@
 		<button type="submit" class="btn btn-dark mb-2">Créer la nouvelle saison</button>
 
 		{{ form_end(form) }}
+
+		<div class="mt-1 pl-2">
+			<a href="{{ app.request.headers.get('referer') }}" class="brown">Retour sur la page de la série</a>
+		</div>
+
 	</div>
 {% endblock %}

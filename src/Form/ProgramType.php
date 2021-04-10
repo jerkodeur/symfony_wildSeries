@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Actor;
+use App\Entity\Category;
 use App\Entity\Program;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,11 +23,20 @@ class ProgramType extends AbstractType
             ->add('poster', UrlType::class, [
                 'required' => false
             ])
-            ->add('category', null, ['choice_label' => 'name'])
+            ->add(
+                'category',
+                null,
+                [
+                    'choice_label' => 'name',
+                    'required' => true,
+                    'placeholder' => 'choisissez une catégorie'
+                ]
+            )
             //TODO Declare specific EntityType
             ->add('actors', EntityType::class, [
                 'class' => Actor::class,
                 'choice_label' => 'name',
+                'required' => false,
                 'multiple' => true, // Authorize multiple choice
                 'expanded' => true, // Transform multiple select to checkboxes
                 'by_reference' => false // For manyToMany relation in the inversed side

@@ -25,3 +25,9 @@
 .font-main {
     font-family: $roboto !important;
 }
+
+.required {
+    &::after {
+        content: " *";
+    }
+}

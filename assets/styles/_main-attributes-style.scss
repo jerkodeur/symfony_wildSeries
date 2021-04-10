@@ -37,4 +37,10 @@ a {
             color: $black;
         }
     }
+    &.danger {
+        color: $danger;
+        &:hover {
+            color: $black;
+        }
+    }
 }

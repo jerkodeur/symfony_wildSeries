@@ -59,7 +59,7 @@
 			{% endblock navbar %}
 		</nav>
 		{% block main %}
-			<div class="main">
+			<div class="main-container">
 				<header>
 					{% block header %}
 						<div class="header">
@@ -71,7 +71,11 @@
 					{% endblock header %}
 				</header>
 				<main>
-					{% block content %}{% endblock %}
+					{% block content %}
+						{% block tabs %}
+							{% block explorer %}{% endblock %}
+						{% endblock %}
+					{% endblock %}
 				</main>
 			{% endblock main %}
 		</div>

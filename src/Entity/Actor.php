@@ -20,7 +20,7 @@ class Actor
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column
      */
     private $name;
 
@@ -35,7 +35,7 @@ class Actor
     private $photo;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column
      */
     private $slug;
 
