@@ -1,6 +1,7 @@
 {# templates/program/show.html.twig #}
 {% extends '_base.html.twig' %}
 {% set tab = app.request.get('tab') ?: 'summary' %}
+{% set numSeason = app.request.get('season') ?: 1 %}
 
 {% block localTitle %}
 	{{ program.title }}
@@ -53,6 +54,11 @@
 					{% endif %}
 
 				</li>
+				{% if tab == 'seasons' %}
+					<li>
+						{% include "season/_navbar.html.twig" %}
+					</li>
+				{% endif %}
 			</ul>
 	{% endblock %}
 <div class="program_show main">
@@ -86,9 +92,15 @@
 			<strong class="text-black">Acteurs :</strong>
 			{% include 'actor/_index.html.twig' %}
 		{% endif %}
+		{% if tab == 'seasons' %}
+			{% include 'season/_index.html.twig' %}
+		{% endif %}
+		{% if tab == 'actors' %}
+			{% include 'actor/_index.html.twig' %}
+		{% endif %}
 		</div>
 	</div>
-	{# back to the program list #}
+	{# nav links #}
 	<div class="bottom-nav">
 		<a href="{{ app.request.headers.get('referer') }}">
 			Retour

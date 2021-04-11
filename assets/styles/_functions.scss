@@ -1,0 +1,3 @@
+@function disabled($color: #000, $alpha: 0.5) {
+    @return rgba($color, $alpha);
+}

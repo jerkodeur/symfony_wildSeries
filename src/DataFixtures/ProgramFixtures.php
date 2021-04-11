@@ -13,7 +13,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     const PROGRAMS = [
         'Walking Dead' => [
             'summary' => 'Le policier Rick Grimes se réveille après un long coma. Il découvre avec effarement que le monde, ravagé par une épidémie, est envahi par les morts-vivants.',
-            'category' => 'Horreur',
+            'category' => 'Horreur'
         ],
         'The Haunting Of Hill House' => [
             'summary' => 'Plusieurs frères et sœurs qui, enfants, ont grandi dans la demeure qui allait devenir la maison hantée la plus célèbre des États-Unis, sont contraints de se réunir pour finalement affronter les fantômes de leur passé.',
@@ -34,7 +34,6 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         'Fear The Walking Dead' => [
             'summary' => 'La série se déroule au tout début de l épidémie relatée dans la série mère The Walking Dead et se passe dans la ville de Los Angeles, et non à Atlanta. Madison est conseillère dans un lycée de Los Angeles. Depuis la mort de son mari, elle élève seule ses deux enfants : Alicia, excellente élève qui découvre les premiers émois amoureux, et son grand frère Nick qui a quitté la fac et a sombré dans la drogue.',
             'category' => 'Horreur',
-
         ],
     ];
 

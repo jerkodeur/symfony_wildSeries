@@ -1,0 +1,63 @@
+{# templates/season/_navbar.html.twig #}
+
+<nav class="arrow-scroll">
+    <div class="arrow-nav">
+        {% if numSeason - 1 > 0 %}
+            <a href={{ path('program_show', {
+                'program': program.slug,
+                'tab': 'seasons',
+                'season': numSeason - 1
+                }) }}
+                class="dark">
+            <
+            </a>
+            {% else %}
+            <span class="disabled"><</span>
+        {% endif %}
+    </div>
+    <div class="panel">
+        {% for season in seasons %}
+            {% if season.number < numSeason %}
+                <a href={{ path('program_show', {
+                'program': program.slug,
+                'tab': 'seasons',
+                'season': season.number
+                }) }}
+                title="{{ 'Voir la saison ' ~ season.number}}"
+                class="dark">
+                    {{ season.number }}
+                </a>
+                <span class="separator">.</span>
+            {% elseif numSeason == season.number %}
+                <span class="arrow-scroll-text">Saison {{ numSeason }}</span>
+            {% else %}
+                <span class="separator">.</span>
+                <a href={{ path('program_show', {
+                'program': program.slug,
+                'tab': 'seasons',
+                'season': season.number
+                }) }}
+                title="{{ 'Voir la saison ' ~ season.number}}"
+                class="dark">
+                    {{ season.number }}
+                </a>
+            {% endif %}
+        {% else %}
+            <span class="text-dark">Aucune saison trouvée</span>
+        {% endfor %}
+    </div>
+    <div class="arrow-nav">
+        {% if numSeason + 1 <= seasons|length %}
+            <a href={{ path('program_show', {
+                'program': program.slug,
+                'tab': 'seasons',
+                'season': numSeason + 1
+                }) }}
+                class="dark">
+            >
+            </a>
+            {% else %}
+            <span class="disabled">></span>
+        {% endif %}
+    </div>
+</nav>
