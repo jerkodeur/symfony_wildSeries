@@ -17,7 +17,7 @@ class EpisodeController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('episode/index.html.twig', [
+        return $this->render('episode/_index.html.twig', [
             'controller_name' => 'EpisodeController',
         ]);
     }

@@ -48,7 +48,7 @@ class User implements UserInterface
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="Author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true)
      */
     private Collection $comments;
 
