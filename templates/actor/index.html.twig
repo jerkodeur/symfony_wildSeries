@@ -1,0 +1,17 @@
+{# templates/actor/index.html.twig #}
+{% extends 'program/show.html.twig' %}
+
+{% block localTitle %}
+    {{ (program.title|capitalize) ~ ' - Acteurs' }}
+{% endblock localTitle %}
+
+{% block nav_r_items %}
+    <a href="{{ path('program_actor_new', { slug: program.slug }) }}">
+        <button type="button" class="btn btn-hoverLight">Nouvel acteur</button>
+    </a>
+{% endblock nav_r_items %}
+
+{% block media %}
+    <strong class="text-black">Acteurs :</strong>
+    {% include 'actor/_index.html.twig' %}
+{% endblock media %}

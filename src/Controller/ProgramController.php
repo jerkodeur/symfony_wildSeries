@@ -113,20 +113,29 @@ class ProgramController extends AbstractController
                 'No program with id : ' . $program->id . ' found in program\'s table.'
             );
         }
-        $season = $this->getDoctrine()
-            ->getRepository(Season::class)
-            ->findBy(['program' => $program]);
 
         return $this->render('program/show.html.twig', [
             'program' => $program,
-            'seasons' => $season
+        ]);
+    }
+
+    /**
+     * List of the seasons for a program
+     *
+     * @Route("/{program<[a-z-]*>}/seasons", methods={"GET"}, name="seasons")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
+     */
+    public function seasons(Program $program): Response
+    {
+        return $this->render('season/index.html.twig', [
+            'program' => $program
         ]);
     }
 
     /**
      * Return the needed program season vue
      *
-     * @Route("program/{program<[a-z-]*>}/season/{season<\d+>}", methods={"GET"}, name="show_season")
+     * @Route("program/{program<[a-z-]*>}/season/{number<\d+>?1}", methods={"GET"}, name="season_show")
      *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
      *
@@ -136,16 +145,9 @@ class ProgramController extends AbstractController
     {
         $doctrine = $this->getDoctrine();
 
-        $episodes = $doctrine
-            ->getRepository(Episode::class)
-            ->findBy([
-                'season' => $season
-            ]);
-
-        return $this->render('season/show.html.twig', [
+        return $this->render('season/index.html.twig', [
             'program' => $program,
-            'season' => $season,
-            'episodes' => $episodes
+            'season' => $season
         ]);
     }
 
@@ -181,8 +183,7 @@ class ProgramController extends AbstractController
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
-            'form' => $form->createView(),
-            'comments' => $episode->getComments()
+            'form' => $form->createView()
         ]);
     }
     /**
@@ -208,7 +209,7 @@ class ProgramController extends AbstractController
             $entityManager->persist($season);
             $entityManager->flush();
             return $this->redirectToRoute(
-                'program_show_season',
+                'program_season_show',
                 [
                     'program' => $program->getSlug(),
                     'season' => $season->getNumber()
@@ -273,17 +274,31 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * Show the current actor informations
+     * @Route("program/{slug<[a-z-]*>}/actors", methods={"GET"}, name="actors")
      *
-     * @Route("program/{program<[a-z-]*>}/actor/{actor_slug<[a-z-]*>}", name="actor_show")
+     */
+    //TODO find by entity object
+    public function actors(Program $program): Response
+    {
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'No program with id : ' . $program->id . ' found in program\'s table.'
+            );
+        }
+
+        return $this->render('actor/index.html.twig', [
+            'program' => $program,
+        ]);
+    }
+
+    /**
+     * Show the current actor information
+     *
+     * @Route("program/{program<[a-z-]*>}/actor/{actor<[a-z-]*>}", name="actor_show")
      *
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"} })
-     * @ParamConverter("actor", class="App\Entity\Actor", options={"mapping": {"actor_slug": "slug"} })
+     * @ParamConverter("actor", class="App\Entity\Actor", options={"mapping": {"actor": "slug"} })
      *
-     * @param \App\Entity\Program $program
-     * @param \App\Entity\Actor $actor
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function ActorShow(Program $program, Actor $actor): Response
     {
@@ -291,5 +306,15 @@ class ProgramController extends AbstractController
             'program' => $program,
             'actor' => $actor,
         ]);
+    }
+
+    /**
+     * Create a new actor for one program
+     *
+     * @route("/{slug<a-z>*}/actor_new}", methods={"GET","POST"}, name="actor_new")
+     */
+    public function ActorNew(Program $program): Response
+    {
+        //
     }
 }

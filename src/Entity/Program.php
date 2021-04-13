@@ -54,7 +54,7 @@ class Program
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program", orphanRemoval=true)
      */
-    private $season;
+    private $seasons;
 
     /**
      * @ORM\ManyToMany(targetEntity=Actor::class, mappedBy="programs")
@@ -127,15 +127,15 @@ class Program
     /**
      * @return Collection|Season[]
      */
-    public function getSeason(): Collection
+    public function getSeasons(): Collection
     {
-        return $this->season;
+        return $this->seasons;
     }
 
     public function addSeason(Season $season): self
     {
         if (!$this->season->contains($season)) {
-            $this->season[] = $season;
+            $this->seasons[] = $season;
             $season->setProgram($this);
         }
 

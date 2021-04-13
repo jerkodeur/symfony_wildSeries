@@ -1,7 +1,7 @@
 {# templates/program/show.html.twig #}
 {% extends '_base.html.twig' %}
-{% set tab = app.request.get('tab') ?: 'summary' %}
-{% set numSeason = app.request.get('season') ?: 1 %}
+{% set page = app.request.get('_route') %}
+
 
 {% block localTitle %}
 	{{ program.title }}
@@ -9,9 +9,7 @@
 
 {% block nav_r_items %}
 	<a href="{{path('program_season_new', {program: program.slug})}}">
-		<button type="button" class="btn btn-hoverLight">
-			Nouvelle saison
-		</button>
+		<button type="button" class="btn btn-hoverLight">Nouvelle saison</button>
 	</a>
 {% endblock nav_r_items %}
 
@@ -20,24 +18,24 @@
 {% endblock title %}
 
 {% block content %}
-	{% block tabs %}
+	{% block pages %}
 		{# Tabs #}
 			<ul class="tabs">
 				{# Summary #}
-				<li {% if tab == 'summary' %} class="selected" {% endif %}>
-					{% if tab != 'summary' %}
-						<a href={{ path('program_show', {'program': program.slug, 'tab': 'summary'}) }} class="dark">Récapitulatif</a>
+				<li {% if page == 'program_show' %} class="selected" {% endif %}>
+					{% if page != 'program_show' %}
+						<a href={{ path('program_show', {'program': program.slug}) }} class="dark">Récapitulatif</a>
 					{% else %}
 						Récapitulatif
 					{% endif %}
 				</li>
 				{# Seasons #}
 				<li
-					{% if not seasons %} class="disabled" {% endif %}
-					{% if tab == 'seasons'%} class="selected" {% endif %}
+					{% if not program.seasons %} class="disabled" {% endif %}
+					{% if page == 'program_season_show'%} class="selected" {% endif %}
 				>
-				{% if seasons and tab != 'seasons' %}
-						<a href={{ path('program_show', {'program': program.slug, 'tab': 'seasons'}) }} class="dark">Saisons</a>
+				{% if program.seasons and page != 'program_season_show' %}
+						<a href={{ path('program_season_show', {'program': program.slug}) }} class="dark">Saisons</a>
 					{% else %}
 						Saisons
 					{% endif %}
@@ -45,19 +43,17 @@
 				{# Actors #}
 				<li
 					{% if not program.actors %} class="disabled" {% endif %}
-					{% if tab == 'actors' %} class="selected" {% endif %}
+					{% if page == 'program_actors' %} class="selected" {% endif %}
 				>
-					{% if program.actors and tab != 'actors' %}
-						<a href={{ path('program_show', {'program': program.slug, 'tab': 'actors'}) }} class="dark">Acteurs</a>
+					{% if program.actors and page != 'program_actors' %}
+						<a href={{ path('program_actors', {'slug': program.slug}) }} class="dark">Acteurs</a>
 					{% else %}
 						Acteurs
 					{% endif %}
 
 				</li>
-				{% if tab == 'seasons' %}
-					<li>
-						{% include "season/_navbar.html.twig" %}
-					</li>
+				{% if page == 'program_season_show' %}
+					<li>{% include "season/_navbar.html.twig" %}</li>
 				{% endif %}
 			</ul>
 	{% endblock %}
@@ -73,31 +69,25 @@
 
 		{# program informations #}
 		<div class="media-body">
-		{% if tab == 'summary' %}
-			<p>{{ program.summary }}</p>
-			<hr/>
-			<p class="text-black">
-				<strong>Catégorie :</strong>
-				<span class="ml-2 text-uppercase">
-					<a class="brown font-weight-bold" href="{{path('category_show', {category: program.category.slug})}}">
-					{{ program.category.name }}
-					</a>
-				</span>
-			</p>
-			<hr/>
-			{# seasons displays #}
-			{% include 'season/_index.html.twig' %}
-			<hr/>
-			{# actors displays #}
-			<strong class="text-black">Acteurs :</strong>
-			{% include 'actor/_index.html.twig' %}
-		{% endif %}
-		{% if tab == 'seasons' %}
-			{% include 'season/_index.html.twig' %}
-		{% endif %}
-		{% if tab == 'actors' %}
-			{% include 'actor/_index.html.twig' %}
-		{% endif %}
+			{% block media %}
+				<p>{{ program.summary }}</p>
+				<hr/>
+				<p class="text-black">
+					<strong>Catégorie :</strong>
+					<span class="ml-2 text-uppercase">
+						<a class="brown font-weight-bold" href="{{path('category_show', {category: program.category.slug})}}">
+						{{ program.category.name }}
+						</a>
+					</span>
+				</p>
+				<hr/>
+				{# seasons displays #}
+				{% include 'season/_index.html.twig' %}
+				<hr/>
+				{# actors displays #}
+				<strong class="text-black">Acteurs :</strong>
+				{% include 'actor/_index.html.twig' %}
+			{% endblock %}
 		</div>
 	</div>
 	{# nav links #}

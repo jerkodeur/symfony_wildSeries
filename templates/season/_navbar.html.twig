@@ -2,11 +2,10 @@
 
 <nav class="arrow-scroll">
     <div class="arrow-nav">
-        {% if numSeason - 1 > 0 %}
-            <a href={{ path('program_show', {
+        {% if season.number - 1 > 0 %}
+            <a href={{ path('program_season_show', {
                 'program': program.slug,
-                'tab': 'seasons',
-                'season': numSeason - 1
+                'number': season.number - 1
                 }) }}
                 class="dark">
             <
@@ -16,30 +15,29 @@
         {% endif %}
     </div>
     <div class="panel">
-        {% for season in seasons %}
-            {% if season.number < numSeason %}
-                <a href={{ path('program_show', {
+        {% for eachSeason in program.seasons %}
+            {% set numSeason = eachSeason.number %}
+            {% if numSeason < season.number %}
+                <a href={{ path('program_season_show', {
                 'program': program.slug,
-                'tab': 'seasons',
-                'season': season.number
+                'number': numSeason
                 }) }}
-                title="{{ 'Voir la saison ' ~ season.number}}"
+                title="{{ 'Voir la saison ' ~ numSeason}}"
                 class="dark">
-                    {{ season.number }}
+                    {{ numSeason }}
                 </a>
                 <span class="separator">.</span>
             {% elseif numSeason == season.number %}
-                <span class="arrow-scroll-text">Saison {{ numSeason }}</span>
+                <span class="arrow-scroll-text">Saison {{ season.number }}</span>
             {% else %}
                 <span class="separator">.</span>
-                <a href={{ path('program_show', {
+                <a href={{ path('program_season_show', {
                 'program': program.slug,
-                'tab': 'seasons',
-                'season': season.number
+                'number': numSeason
                 }) }}
-                title="{{ 'Voir la saison ' ~ season.number}}"
+                title="{{ 'Voir la saison ' ~ numSeason}}"
                 class="dark">
-                    {{ season.number }}
+                    {{ numSeason }}
                 </a>
             {% endif %}
         {% else %}
@@ -47,11 +45,10 @@
         {% endfor %}
     </div>
     <div class="arrow-nav">
-        {% if numSeason + 1 <= seasons|length %}
-            <a href={{ path('program_show', {
+        {% if season.number + 1 <= program.seasons|length %}
+            <a href={{ path('program_season_show', {
                 'program': program.slug,
-                'tab': 'seasons',
-                'season': numSeason + 1
+                'number': season.number + 1
                 }) }}
                 class="dark">
             >

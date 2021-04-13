@@ -39,7 +39,7 @@
                 {% endif %}
 
                 <ul>
-                    {% for comment in comments %}
+                    {% for comment in episode.comments %}
                         <li>{{ comment.comment ~ ' ' ~ comment.rate }}</li>
                     {% endfor %}
                 </ul>
@@ -48,7 +48,7 @@
                 <a class="brown"
                     href="{{
                     path(
-                        'program_show_season',
+                        'program_season_show',
                         { program: program.slug, season: season.id }
                     )
                     }}">

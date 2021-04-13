@@ -1,0 +1,33 @@
+{# templates/season/index.html.twig #}
+{% extends 'program/show.html.twig' %}
+
+{% block localTitle %}
+    {{ (program.title|capitalize) ~ ' - Saison' ~ season.number }}
+{% endblock localTitle %}
+
+{% block nav_r_items %}
+    <a href="{{
+        path(
+            'program_episode_new',
+            { program: program.slug, season: season.number }
+        )
+        }}">
+        <button type="button" class="btn btn-hoverLight">Nouvel épisode</button>
+    </a>
+{% endblock nav_r_items %}
+
+{% block media %}
+    <p class="text-black">
+        {{ season.description }}
+    </p>
+    <div class="d-flex flex-column w-100">
+        <div class="season_list">
+            {# list of episodes #}
+            <h5 class="mt-2 pl-2 text-black">
+                Liste des épisodes:
+            </h5>
+            <hr />
+            {% include 'episode/_index.html.twig' %}
+        </div>
+    </div>
+{% endblock media %}

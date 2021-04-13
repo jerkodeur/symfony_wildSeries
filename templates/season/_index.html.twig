@@ -1,11 +1,11 @@
 {# templates/season/_index.html.twig #}
 
 <ul>
-	{% for season in seasons %}
+	{% for season in program.seasons %}
 		<li>
 			{# TODO Lien vers le nom d'une route #}
 			<a class="brown"
-				href='{{path('program_show_season',{ program: program.slug, season: season.id })}}'>
+				href='{{path('program_season_show',{ program: program.slug, season: season.id })}}'>
 				{{ 'Saison ' ~ season.number}}
 				{% if season.year %}
 				-

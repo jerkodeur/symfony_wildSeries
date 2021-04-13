@@ -1,7 +1,7 @@
 {#	templates/episode/_index.html.twig#}
 
 <ul>
-	{% for episode in episodes %}
+	{% for episode in season.episodes %}
 		<li>
 			<a class="dark"
 				href={{path('program_episode_show', {program: program.slug, season: season.id, episode: episode.slug} )}}>
